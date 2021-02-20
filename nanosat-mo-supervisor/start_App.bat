@@ -1,0 +1,1 @@
+java -classpath "target/simple-mo-provider-jar-with-dependencies.jar;lib/*" ioag.mo.start.AppCLI

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>int.esa.nmf.mission.raspberrypi</groupId>
+    <artifactId>reactor</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+  
+    <name>NMF Mission Raspberry Pi</name>
+    <description>Reactor POM for NMF Raspberry Pi mission</description>
+    <url>https://nanosat-mo-framework.github.io/</url>
+
+    <organization>
+        <name>NanoSat MO Framework</name>
+        <url>https://nanosat-mo-framework.github.io/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://raw.github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi/master/LICENCE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:NanoSat-MO-Framework/nmf-mission-raspberry-pi.git</connection>
+        <developerConnection>scm:git:git@github.com:NanoSat-MO-Framework/nmf-mission-raspberry-pi.git</developerConnection>
+        <url>https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <id>CesarCoelho</id>
+            <name>César Coelho</name>
+            <url>https://github.com/CesarCoelho</url>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>platform-service-impl</module>
+        <module>nanosat-mo-supervisor</module>
+        <module>ground-mo-proxy</module>
+        <module>space-file-system</module>
+    </modules>
+
+</project>

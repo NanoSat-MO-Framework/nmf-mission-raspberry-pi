@@ -1,0 +1,17 @@
+**/**/libs/
+**/**/.svn/
+**/comArchive.db
+**/comArchive.db-journal
+**/target/
+**/libs/
+**/.svn/
+**/providerURIs.properties
+**/providerURIsSecondary.properties
+*.iml
+**/.idea
+*/**/nbactions*.xml
+**/.project
+**/.classpath
+**/.settings
+**/.vscode
+**/build/

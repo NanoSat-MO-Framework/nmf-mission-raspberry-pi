@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+  
+    <groupId>int.esa.nmf.mission.raspberrypi</groupId>
+    <artifactId>ground-mo-proxy</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>NMF Mission Raspberry Pi - Ground MO Proxy</name>
+    <description>Ground MO Proxy for the Raspberry Pi mission</description>
+    <url>https://nanosat-mo-framework.github.io/</url>
+  
+    <organization>
+        <name>NanoSat MO Framework</name>
+        <url>https://nanosat-mo-framework.github.io/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://raw.github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi/master/LICENCE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:NanoSat-MO-Framework/nmf-mission-raspberry-pi.git</connection>
+        <developerConnection>scm:git:git@github.com:NanoSat-MO-Framework/nmf-mission-raspberry-pi.git</developerConnection>
+        <url>https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <id>CesarCoelho</id>
+            <name>César Coelho</name>
+            <url>https://github.com/CesarCoelho</url>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>int.esa.nmf.core</groupId>
+            <artifactId>generic-ground-mo-proxy</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/..</directory>
+                <includes>
+                    <include>LICENCE.md</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
