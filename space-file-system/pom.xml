@@ -45,16 +45,19 @@
 
     <properties>
         <esa.nmf.version>2.0.0-SNAPSHOT</esa.nmf.version>
-        <esa.nmf.output.folder>space-file-system</esa.nmf.output.folder>
-        <mission.outputdir>${project.build.directory}/${esa.nmf.output.folder}</mission.outputdir>
+        <rpi.folder.output>space-file-system</rpi.folder.output>
+        <rpi.folder.nmf>nanosat-mo-framework</rpi.folder.nmf>
+        <mission.outputdir>${project.build.directory}/${rpi.folder.output}</mission.outputdir>
     </properties>
     
     <dependencies>
+        <!-- We need this to run apps: -->
         <dependency>
             <groupId>int.esa.nmf.core</groupId>
             <artifactId>nanosat-mo-connector</artifactId>
             <version>${esa.nmf.version}</version>
         </dependency>
+        <!-- We need this to run the supervisor: -->
         <dependency>
             <groupId>int.esa.nmf.mission.raspberrypi</groupId>
             <artifactId>nanosat-mo-supervisor-raspberrypi</artifactId>
@@ -86,7 +89,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${mission.outputdir}/nanosat-mo-framework/libs</outputDirectory>
+                            <outputDirectory>${mission.outputdir}/${rpi.folder.nmf}/libs</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -111,7 +114,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${mission.outputdir}/nanosat-mo-framework</outputDirectory>
+                            <outputDirectory>${mission.outputdir}/${rpi.folder.nmf}</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${basedir}/src/main/resources</directory>

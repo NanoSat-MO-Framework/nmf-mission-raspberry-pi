@@ -24,11 +24,13 @@
 package esa.mo.nmf.provider;
 
 import esa.mo.com.impl.util.COMServicesProvider;
+import esa.mo.nmf.FileSystem;
 import esa.mo.nmf.MonitorAndControlNMFAdapter;
 import esa.mo.nmf.nanosatmosupervisor.NanoSatMOSupervisor;
 import esa.mo.nmf.nmfpackage.NMFPackagePMBackend;
 import esa.mo.platform.impl.util.PlatformServicesConsumer;
 import esa.mo.platform.impl.util.PlatformServicesProviderRaspberryPi;
+import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +54,10 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
     public static void main(final String args[]) throws Exception {
         NanoSatMOSupervisorRaspberryPiImpl supervisor = new NanoSatMOSupervisorRaspberryPiImpl();
         supervisor.init(new MCRaspberryPiAdapter());
+        File dir = FileSystem.getUserHomeAppCacheDir();
+
+        Logger.getLogger(NanoSatMOSupervisorRaspberryPiImpl.class.getName()).log(
+                Level.INFO, "The path of the dir is: {0}", dir.getAbsolutePath());
     }
 
     @Override
@@ -60,9 +66,10 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
         Properties defaultprops = System.getProperties();
         defaultprops.putAll(PropertiesTransport.getProperties());
         defaultprops.putAll(PropertiesSettings.getProperties());
+        defaultprops.putAll(PropertiesProvider.getProperties());
         System.setProperties(defaultprops);
         
-        super.init(mcAdapter, new PlatformServicesConsumer(), new NMFPackagePMBackend());
+        super.init(mcAdapter, new PlatformServicesConsumer(), new NMFPackagePMBackend("packages"));
     }
 
     @Override
