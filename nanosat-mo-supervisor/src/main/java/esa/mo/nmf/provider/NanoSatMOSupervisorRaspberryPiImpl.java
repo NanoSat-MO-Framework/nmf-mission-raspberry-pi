@@ -24,7 +24,9 @@
 package esa.mo.nmf.provider;
 
 import esa.mo.com.impl.util.COMServicesProvider;
-import esa.mo.nmf.FileSystem;
+import esa.mo.helpertools.helpers.HelperMisc;
+import esa.mo.helpertools.misc.Const;
+import esa.mo.nmf.AppStorage;
 import esa.mo.nmf.MonitorAndControlNMFAdapter;
 import esa.mo.nmf.nanosatmosupervisor.NanoSatMOSupervisor;
 import esa.mo.nmf.nmfpackage.NMFPackagePMBackend;
@@ -54,7 +56,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
     public static void main(final String args[]) throws Exception {
         NanoSatMOSupervisorRaspberryPiImpl supervisor = new NanoSatMOSupervisorRaspberryPiImpl();
         supervisor.init(new MCRaspberryPiAdapter());
-        File dir = FileSystem.getUserHomeAppCacheDir();
+        File dir = AppStorage.getAppCacheDir();
 
         Logger.getLogger(NanoSatMOSupervisorRaspberryPiImpl.class.getName()).log(
                 Level.INFO, "The path of the dir is: {0}", dir.getAbsolutePath());
@@ -67,7 +69,18 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
         defaultprops.putAll(PropertiesTransport.getProperties());
         defaultprops.putAll(PropertiesSettings.getProperties());
         defaultprops.putAll(PropertiesProvider.getProperties());
-        System.setProperties(defaultprops);
+        
+        Properties systemProps = System.getProperties();
+        systemProps.putAll(defaultprops);
+        System.setProperties(systemProps);
+
+        // Directory for COM Archive:
+        System.setProperty(HelperMisc.PROP_MO_APP_NAME, Const.NANOSAT_MO_SUPERVISOR_NAME);
+        String location = AppStorage.getAppMainDir() + File.separator + "comArchive.db";
+        String url = "jdbc:sqlite:" + location;
+        systemProps.put("esa.nmf.archive.persistence.jdbc.url", url);
+        System.setProperties(systemProps);
+
         
         super.init(mcAdapter, new PlatformServicesConsumer(), new NMFPackagePMBackend("packages"));
     }

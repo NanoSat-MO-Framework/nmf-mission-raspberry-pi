@@ -71,6 +71,13 @@
         </dependency>
     </dependencies>
     <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.8</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -125,6 +132,28 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            <!--   This deploys the generated Space File System   -->
+            <!--   on a remote machine (example: a FlatSat)       -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>wagon-maven-plugin</artifactId>
+                <version>2.0.2</version>
+                <executions>
+                    <execution>
+                        <id>upload-to-myserver</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>upload</goal>
+                        </goals>
+                        <configuration>
+                            <fromDir>${mission.outputdir}/${rpi.folder.nmf}</fromDir>
+                            <url>scp://root@192.168.178.33/</url>
+                            <toDir>${rpi.folder.nmf}</toDir>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>            
         </plugins>
     </build>
 </project>
