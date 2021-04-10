@@ -6,6 +6,7 @@
 **/libs/
 **/.svn/
 **/providerURIs.properties
+**/centralDirectoryService.uri
 **/providerURIsSecondary.properties
 *.iml
 **/.idea

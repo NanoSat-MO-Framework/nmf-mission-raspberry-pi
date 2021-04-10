@@ -44,7 +44,7 @@
     </developers>
 
     <properties>
-        <esa.nmf.version>2.0.0-SNAPSHOT</esa.nmf.version>
+        <esa.nmf.version>2.1.0-SNAPSHOT</esa.nmf.version>
         <rpi.folder.output>space-file-system</rpi.folder.output>
         <rpi.folder.nmf>nanosat-mo-framework</rpi.folder.nmf>
         <mission.outputdir>${project.build.directory}/${rpi.folder.output}</mission.outputdir>

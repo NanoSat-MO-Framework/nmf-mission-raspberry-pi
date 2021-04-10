@@ -53,12 +53,12 @@
         <dependency>
             <groupId>int.esa.nmf.core</groupId>
             <artifactId>nanosat-mo-supervisor</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>2.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>int.esa.nmf.core</groupId>
             <artifactId>nmf-package-lib</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>2.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>int.esa.nmf.mission.raspberrypi</groupId>

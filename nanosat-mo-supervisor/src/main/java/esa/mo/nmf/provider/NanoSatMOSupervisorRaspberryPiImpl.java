@@ -76,7 +76,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
 
         // Directory for COM Archive:
         System.setProperty(HelperMisc.PROP_MO_APP_NAME, Const.NANOSAT_MO_SUPERVISOR_NAME);
-        String location = AppStorage.getAppMainDir() + File.separator + "comArchive.db";
+        String location = AppStorage.getAppNMFInternalDir() + File.separator + "comArchive.db";
         String url = "jdbc:sqlite:" + location;
         systemProps.put("esa.nmf.archive.persistence.jdbc.url", url);
         System.setProperties(systemProps);

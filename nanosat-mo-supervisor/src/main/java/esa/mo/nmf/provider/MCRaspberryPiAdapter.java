@@ -63,17 +63,19 @@ public class MCRaspberryPiAdapter extends MonitorAndControlNMFAdapter {
 
     private final static String DATE_PATTERN = "dd MMM yyyy HH:mm:ss.SSS";
 
-    private static final String PARAMETER_CURRENT_PARTITION = "CurrentPartition";
+    private static final String PARAMETER_CURRENT_PARTITION = "System.CurrentPartition";
     private static final String CMD_CURRENT_PARTITION = "mount -l | grep \"on / \" | grep -o 'mmc.*[0-9]p[0-9]'";
 
-    private static final String PARAMETER_LINUX_VERSION = "LinuxVersion";
+    private static final String PARAMETER_LINUX_VERSION = "Linux.Version";
     private static final String CMD_LINUX_VERSION = "uname -a";
     private static final String CMD_LINUX_REBOOT = "reboot";
 
     private static final String ACTION_GPS_SENTENCE = "GPS_Sentence";
-    private static final String ACTION_REBOOT = "Reboot_MityArm";
-    private static final String ACTION_CLOCK_SET_TIME = "Clock.setTimeUsingDeltaMilliseconds";
+    private static final String ACTION_REBOOT = "System.Reboot";
+    private static final String ACTION_CLOCK_SET_TIME = "System.SetTimeUsingDeltaMilliseconds";
 
+    private static final String ACTION_NMF_RESTART = "NMF.Restart";
+    
     private final ShellCommander shellCommander = new ShellCommander();
 
     @Override
@@ -96,7 +98,7 @@ public class MCRaspberryPiAdapter extends MonitorAndControlNMFAdapter {
         paramIdentifiers.add(new Identifier(PARAMETER_CURRENT_PARTITION));
 
         defs.add(new ParameterDefinitionDetails(
-                "The version of the software.",
+                "The version of Linux.",
                 Union.STRING_SHORT_FORM.byteValue(),
                 "",
                 false,
