@@ -45,6 +45,8 @@ import org.ccsds.moims.mo.mal.MALException;
  */
 public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSupervisor {
 
+    private static final String DIR_PACKAGES = "packages";
+
     private PlatformServicesProviderRaspberryPi platformServicesRaspberryPi;
 
     /**
@@ -56,10 +58,12 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
     public static void main(final String args[]) throws Exception {
         NanoSatMOSupervisorRaspberryPiImpl supervisor = new NanoSatMOSupervisorRaspberryPiImpl();
         supervisor.init(new MCRaspberryPiAdapter());
-        File dir = AppStorage.getAppCacheDir();
 
+        /*
+        File dir = AppStorage.getAppCacheDir();
         Logger.getLogger(NanoSatMOSupervisorRaspberryPiImpl.class.getName()).log(
                 Level.INFO, "The path of the dir is: {0}", dir.getAbsolutePath());
+         */
     }
 
     @Override
@@ -69,7 +73,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
         defaultprops.putAll(PropertiesTransport.getProperties());
         defaultprops.putAll(PropertiesSettings.getProperties());
         defaultprops.putAll(PropertiesProvider.getProperties());
-        
+
         Properties systemProps = System.getProperties();
         systemProps.putAll(defaultprops);
         System.setProperties(systemProps);
@@ -81,8 +85,10 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
         systemProps.put("esa.nmf.archive.persistence.jdbc.url", url);
         System.setProperties(systemProps);
 
-        
-        super.init(mcAdapter, new PlatformServicesConsumer(), new NMFPackagePMBackend("packages"));
+        super.init(mcAdapter,
+                new PlatformServicesConsumer(),
+                new NMFPackagePMBackend(DIR_PACKAGES)
+        );
     }
 
     @Override

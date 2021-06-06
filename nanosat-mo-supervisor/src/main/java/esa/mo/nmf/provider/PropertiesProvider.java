@@ -23,6 +23,7 @@
  */
 package esa.mo.nmf.provider;
 
+import esa.mo.helpertools.helpers.HelperMisc;
 import java.util.Properties;
 
 /**
@@ -37,8 +38,7 @@ public class PropertiesProvider {
         
         // Relative path to the apps directory location
         props.put("esa.mo.sm.impl.provider.appslauncher.FolderLocation", "apps");
-        
-        //props.put("", "");
+        props.put(HelperMisc.PROP_WORK_DIR_STORAGE_MODE, "2");
 
         return props;
     }

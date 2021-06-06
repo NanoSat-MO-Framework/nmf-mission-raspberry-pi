@@ -23,6 +23,7 @@
  */
 package esa.mo.nmf.provider;
 
+import esa.mo.helpertools.helpers.HelperMisc;
 import java.util.Properties;
 
 /**
@@ -36,15 +37,13 @@ public class PropertiesSettings {
         Properties props = new Properties();
         
         // To form the Network zone
-        props.put("helpertools.configurations.MissionName", "NMF_SDK");
-        props.put("helpertools.configurations.NetworkZone", "NanoSat");
-        props.put("helpertools.configurations.DeviceName", "SDK");
+        props.put(HelperMisc.PROP_ORGANIZATION_NAME, "nmf");
+        props.put(HelperMisc.PROP_MISSION_NAME, "rpi");
+        props.put(HelperMisc.PROP_NETWORK_ZONE, "space");
+        props.put(HelperMisc.PROP_DEVICE_NAME, "Raspberry_Pi");
 
         // Set the name of the MAL classes to use
         props.put("org.ccsds.moims.mo.mal.factory.class", "esa.mo.mal.impl.MALContextFactoryImpl");
-        
-        
-        //props.put("", "");
 
         return props;
     }

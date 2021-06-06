@@ -49,13 +49,9 @@ public class PropertiesTransport {
         // props.put("org.ccsds.moims.mo.mal.encoding.protocol.maltcp", "esa.mo.mal.encoder.binary.split.SplitBinaryStreamFactory");
         props.put("org.ccsds.moims.mo.mal.transport.tcpip.autohost", "true");
         
-        
         //props.put("org.ccsds.moims.mo.mal.transport.tcpip.host", "xxx.xxx.xxx.xxx");
         //props.put("org.ccsds.moims.mo.mal.transport.tcpip.port", "54321");
         //props.put("org.ccsds.moims.mo.mal.transport.tcpip.isServer", "true");
-        
-        
-        //props.put("", "");
 
         return props;
     }

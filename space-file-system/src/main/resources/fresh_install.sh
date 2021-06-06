@@ -36,20 +36,21 @@ if id -u "$user_nmf_admin" >/dev/null 2>&1; then
 fi
 
 # Add the NMF Admin User and set password
-useradd $user_nmf_admin -m -s /bin/bash --user-group
+#useradd $user_nmf_admin -m -s /bin/bash --user-group
+adduser --system --shell /bin/bash --group $user_nmf_admin
 echo $user_nmf_admin:$user_nmf_admin_password | chpasswd
 
 ###############################################################################
 # We need to allow the created user above to run the following commands:
-#       1. useradd  - from: /usr/sbin/useradd
-#       2. userdel  - from: /usr/sbin/userdel
+#       1. adduser  - from: /usr/sbin/adduser
+#       2. deluser  - from: /usr/sbin/deluser
 #       3. su		- from: /bin/su
 #       4. chmod    - from: /bin/chmod
 #       5. chgrp 	- from: /bin/chgrp
 #
 # We can do this in 2 ways:
 # 		(a) In /etc/sudoers we need to add the line:
-# 	nmf-admin ALL=(ALL) NOPASSWD:/usr/sbin/useradd, ....<other commands>....
+# 	nmf-admin ALL=(ALL) NOPASSWD:/usr/sbin/adduser, ....<other commands>....
 #
 # 		(b) Instead of editing the sudoers file, we can create the a new file
 # 	with the authorization rules in the /etc/sudoers.d directory:
@@ -57,8 +58,8 @@ echo $user_nmf_admin:$user_nmf_admin_password | chpasswd
 #
 # We will pick option (b), as it will be cleaner
 ###############################################################################
-rule_1="/usr/sbin/useradd"
-rule_2="/usr/sbin/userdel"
+rule_1="/usr/sbin/adduser"
+rule_2="/usr/sbin/deluser"
 rule_3="/bin/su - $user_nmf_app_prefix*"
 rule_4="/bin/chmod --recursive 770 $dir_home*, /bin/chmod --recursive 750 $dir_nmf*"
 rule_5="/bin/chgrp"
