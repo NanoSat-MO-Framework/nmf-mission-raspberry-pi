@@ -9,9 +9,39 @@ The SDK is based on a simulator, providing most of the platform functionalities 
 The official website of the NanoSat MO Framework is available [here].
 
 # Building the project
-You can build this project for two scenarios. In the first scenario you want a minimal build to put onto the Raspberry Pi. You can produce this build by just running 'mvn install' in the root directory of 
-this repository. The second scenario allows you to test and simulate your apps in order to validate their correctness and later connect to your apps on the spacecraft using the Ground MO Proxy. 
-This is done by providing a separate build profile which can be invoked by running 'mvn install -Pground' inside the main directory of this repository.
+
+1. Clone the NanoSat MO Framework and switch to the "phi-sat-2 branch":
+```
+https://github.com/esa/nanosat-mo-framework.git
+```
+
+2. Clone the nmf-mission-raspberry-pi repository:
+```
+https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi.git
+```
+
+3. Go to the space-file-system project and edit the IP Address to the one of the Raspberry Pi machine on the following line:
+```
+https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi/blob/master/space-file-system/pom.xml#L151
+```
+
+4. Compile both projects in the same order as above. During compilation, the nmf-mission-raspberry-pi will request the root password to be able to execute the file transfer.
+
+# Installing the NMF on your Raspberry Pi
+
+These are a continuation of the steps above:
+
+5. Login as root and execute the following commmand on the /nanosat-mo-framework folder:
+```
+./fresh_install.sh
+```
+
+6. The installation should output the message: "Success! The NanoSat MO Framework was installed!". Otherwise, please read the error and fix it accordingly.
+
+7. Start the NanoSat MO Supervisor with the command:
+```
+./start_supervisor.sh
+```
 
 # Bugs Reporting
 Bug Reports can be submitted on: [Bug Reports]
