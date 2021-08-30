@@ -10,7 +10,7 @@ The official website of the NanoSat MO Framework is available [here].
 
 # Building the project
 
-1. Clone the NanoSat MO Framework and switch to the "phi-sat-2 branch":
+1. Clone the NanoSat MO Framework, then switch to the "phi-sat-2" branch:
 ```
 https://github.com/esa/nanosat-mo-framework.git
 ```
@@ -31,14 +31,16 @@ https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi/blob/master/spa
 
 These are a continuation of the steps above:
 
-5. Login as root and execute the following commmand on the /nanosat-mo-framework folder:
+5. Install Java on the Raspberry Pi if not installed yet
+
+6. Login as root and execute the following commmand on the /nanosat-mo-framework folder:
 ```
 ./fresh_install.sh
 ```
 
-6. The installation should output the message: "Success! The NanoSat MO Framework was installed!". Otherwise, please read the error and fix it accordingly.
+7. The installation should output the message: "Success! The NanoSat MO Framework was installed!". Otherwise, please read the error and fix it accordingly.
 
-7. Start the NanoSat MO Supervisor with the command:
+8. Start the NanoSat MO Supervisor with the command:
 ```
 ./start_supervisor.sh
 ```
