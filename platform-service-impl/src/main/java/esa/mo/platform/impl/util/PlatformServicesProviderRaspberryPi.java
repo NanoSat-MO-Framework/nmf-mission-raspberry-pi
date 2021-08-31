@@ -30,6 +30,9 @@ import esa.mo.platform.impl.provider.gen.GPSProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.AutonomousADCSProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.OpticalDataReceiverProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.SoftwareDefinedRadioProviderServiceImpl;
+import esa.mo.platform.impl.provider.raspberrypi.CameraSingleImageAdapter;
+import esa.mo.platform.impl.provider.raspberrypi.GPSSoftSimAdapter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ccsds.moims.mo.mal.MALException;
 
@@ -40,34 +43,34 @@ import org.ccsds.moims.mo.mal.MALException;
 public class PlatformServicesProviderRaspberryPi implements PlatformServicesProviderInterface {
 
     private final static Logger LOGGER = Logger.getLogger(PlatformServicesProviderRaspberryPi.class.getName());
-    
+
     private final AutonomousADCSProviderServiceImpl adcsService
             = new AutonomousADCSProviderServiceImpl();
-    
-    private final CameraProviderServiceImpl cameraService 
+
+    private final CameraProviderServiceImpl cameraService
             = new CameraProviderServiceImpl();
-    
-    private final GPSProviderServiceImpl gpsService 
+
+    private final GPSProviderServiceImpl gpsService
             = new GPSProviderServiceImpl();
-    
+
     private final OpticalDataReceiverProviderServiceImpl optrxService
             = new OpticalDataReceiverProviderServiceImpl();
-    
+
     private final PowerControlProviderServiceImpl powerService
             = new PowerControlProviderServiceImpl();
-    
+
     private final SoftwareDefinedRadioProviderServiceImpl sdrService
             = new SoftwareDefinedRadioProviderServiceImpl();
 
     public void init(COMServicesProvider comServices) throws MALException {
-        /*
         try {
-            cameraService.init(comServices, new CameraRaspberryPiAdapter());
+            GPSSoftSimAdapter gpsAdapter = new GPSSoftSimAdapter();
+            gpsService.init(comServices, gpsAdapter);
+            cameraService.init(comServices, new CameraSingleImageAdapter());
         } catch (UnsatisfiedLinkError | NoClassDefFoundError | NoSuchMethodError error) {
             LOGGER.log(Level.SEVERE, "Could not load platform adapters "
                     + "(check for missing JARs and libraries)", error);
         }
-        */
     }
 
     @Override

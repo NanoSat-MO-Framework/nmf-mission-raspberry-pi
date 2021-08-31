@@ -45,9 +45,9 @@
 
     <properties>
         <esa.nmf.version>2.1.0-SNAPSHOT</esa.nmf.version>
-        <rpi.folder.output>space-file-system</rpi.folder.output>
-        <rpi.folder.nmf>nanosat-mo-framework</rpi.folder.nmf>
-        <mission.outputdir>${project.build.directory}/${rpi.folder.output}</mission.outputdir>
+        <out.folder.output>space-file-system</out.folder.output>
+        <out.folder.nmf>nanosat-mo-framework</out.folder.nmf>
+        <mission.outputdir>${project.build.directory}/${out.folder.output}</mission.outputdir>
     </properties>
     
     <dependencies>
@@ -96,7 +96,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${mission.outputdir}/${rpi.folder.nmf}/libs</outputDirectory>
+                            <outputDirectory>${mission.outputdir}/${out.folder.nmf}/libs</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -121,7 +121,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${mission.outputdir}/${rpi.folder.nmf}</outputDirectory>
+                            <outputDirectory>${mission.outputdir}/${out.folder.nmf}</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${basedir}/src/main/resources</directory>
@@ -147,9 +147,9 @@
                             <goal>upload</goal>
                         </goals>
                         <configuration>
-                            <fromDir>${mission.outputdir}/${rpi.folder.nmf}</fromDir>
+                            <fromDir>${mission.outputdir}/${out.folder.nmf}</fromDir>
                             <url>scp://root@192.168.178.33/</url>
-                            <toDir>${rpi.folder.nmf}</toDir>
+                            <toDir>${out.folder.nmf}</toDir>
                         </configuration>
                     </execution>
                 </executions>
