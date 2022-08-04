@@ -25,6 +25,7 @@ sudo passwd
 ```bash
 sudo nano /etc/ssh/sshd_config
 ```
+
 	- Replace the line **"#PermitRootLogin prohibit-password"** with **"PermitRootLogin yes"**.
 	- Save and exit (CTRL+O, CTRL+X)
 	- Restart SSH:
@@ -46,7 +47,7 @@ https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi.git
 ```
                         <configuration>
                             <fromDir>${mission.outputdir}/${out.folder.nmf}</fromDir>
-                            <url>scp://root@192.168.178.33/</url>
+                            **<url>scp://root@192.168.178.33/</url>**
                             <toDir>${out.folder.nmf}</toDir>
                         </configuration>
 ```
