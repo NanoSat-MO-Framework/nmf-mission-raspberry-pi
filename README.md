@@ -19,11 +19,11 @@ The installation of the NMF on a Raspberry Pi provides a cheap testbed environme
 
 1. By default, the root password is disabled on the Raspberry Pi. Set a root password: ```sudo passwd ```
 
-2. Enable SSH on the Raspberry Pi: ```sudo raspi-config ``` (Interface Options -> SSH)
+2. Enable SSH on the Raspberry Pi: ```sudo raspi-config```  (Interface Options -> SSH)
 
 3. Allow SSH access for root:
 	- Edit the **/etc/ssh/sshd_config** file: ```sudo nano /etc/ssh/sshd_config ```
-	- Replace the line **#PermitRootLogin prohibit-password** with **PermitRootLogin yes**
+	- Replace the line: **#PermitRootLogin prohibit-password** with **PermitRootLogin yes**
 	- Save and exit (CTRL+O, CTRL+X)
 	- Restart SSH: ```sudo service ssh restart ```
 
@@ -38,17 +38,21 @@ git clone https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi.git
 
 3. Go to the pom file of space-file-system project and edit the IP Address to match the Raspberry Pi machine on:
 ```
-				<configuration>
-					<fromDir>${mission.outputdir}/${out.folder.nmf}</fromDir>
-					<url>scp://root@192.168.178.33/</url>
-					<toDir>${out.folder.nmf}</toDir>
-				</configuration>
+		<configuration>
+			<fromDir>${mission.outputdir}/${out.folder.nmf}</fromDir>
+			<url>scp://root@192.168.178.33/</url>
+			<toDir>${out.folder.nmf}</toDir>
+		</configuration>
 ```
 
-4. **This step will not work if the Raspberry Pi was not configured as presented in the section above.** Build the **nmf-mission-raspberry-pi** project. During compilation, the space-file-system project will request the root password of the Raspberry Pi remote machine in order to be execute the files transfer.
+4. Build the **nmf-mission-raspberry-pi** project:
 ```
 mvn clean install
 ```
+
+**Warning: This step will not work if the Raspberry Pi was not configured as presented in the section above.** 
+
+5. During compilation, the space-file-system project will request the root password of the Raspberry Pi remote machine in order to be execute the files transfer.
 
 # Installing the NMF on your Raspberry Pi and running it
 
@@ -62,14 +66,22 @@ sudo apt-get install openjdk-8-jdk
 2. Execute the following commmand on the /nanosat-mo-framework folder:
 ```
 cd /nanosat-mo-framework/
+```
+```
 sudo chmod +x fresh_install.sh
+```
+```
 sudo ./fresh_install.sh
 ```
 
 **Warning**: If you get the error "sudo: unable to execute ./fresh_install.sh: No such file or directory", it is because the file was generated in a Windows machine and has CRLF ending. Fix it with:
 ```
 sudo apt-get install dos2unix
+```
+```
 sudo dos2unix fresh_install.sh
+```
+```
 sudo ./fresh_install.sh
 ```
 
