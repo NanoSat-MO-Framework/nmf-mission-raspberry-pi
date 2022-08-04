@@ -35,19 +35,15 @@ sudo service ssh restart
 
 # Building the project
 
-1. Follow the Readme instructions on the NanoSat MO Framework project (select "phi-sat-2" branch):
-[NanoSat MO Framework](https://github.com/esa/nanosat-mo-framework/tree/phi-sat-2)
+1. Follow the Readme instructions on the [NanoSat MO Framework](https://github.com/esa/nanosat-mo-framework/) project
 
-2. Clone the this (nmf-mission-raspberry-pi) repository:
-```
-https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi.git
-```
+2. Clone this (nmf-mission-raspberry-pi) repository: ``` git clone https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi.git ```
 
 4. Go to the space-file-system project and edit the IP Address to match the Raspberry Pi machine on:
 ```
                         <configuration>
                             <fromDir>${mission.outputdir}/${out.folder.nmf}</fromDir>
-                            **<url>scp://root@192.168.178.33/</url>**
+                            <url>scp://root@192.168.178.33/</url>
                             <toDir>${out.folder.nmf}</toDir>
                         </configuration>
 ```
