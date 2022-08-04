@@ -29,7 +29,7 @@ The installation of the NMF on a Raspberry Pi provides a cheap testbed environme
 
 # Building the project
 
-1. Follow the Readme instructions on the [NanoSat MO Framework](https://github.com/esa/nanosat-mo-framework/) project
+1. Follow the Readme instructions on the [NanoSat MO Framework](https://github.com/esa/nanosat-mo-framework/) project before continuing to the next steps
 
 2. Clone this (nmf-mission-raspberry-pi) repository:
 ```
@@ -50,9 +50,9 @@ git clone https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi.git
 mvn clean install
 ```
 
-**Warning: This step will not work if the Raspberry Pi was not configured as presented in the section above.** 
-
 5. During compilation, the space-file-system project will request the root password of the Raspberry Pi remote machine in order to be execute the files transfer.
+
+**Warning:** This step will not work if the Raspberry Pi was not configured as presented in the section above.
 
 # Installing the NMF on your Raspberry Pi and running it
 
@@ -63,34 +63,23 @@ These are a continuation of the steps above:
 sudo apt-get install openjdk-8-jdk
 ```
 
-2. Execute the following commmand on the /nanosat-mo-framework folder:
+2. Execute the following commmands on the /nanosat-mo-framework folder:
 ```
 cd /nanosat-mo-framework/
-```
-```
 sudo chmod +x fresh_install.sh
-```
-```
 sudo ./fresh_install.sh
 ```
 
 **Warning**: If you get the error "sudo: unable to execute ./fresh_install.sh: No such file or directory", it is because the file was generated in a Windows machine and has CRLF ending. Fix it with:
 ```
 sudo apt-get install dos2unix
-```
-```
 sudo dos2unix fresh_install.sh
-```
-```
 sudo ./fresh_install.sh
 ```
 
 3. The installation should output the message: "Success! The NanoSat MO Framework was installed!". Otherwise, please read the error and fix it accordingly.
 
-4. Start the NanoSat MO Supervisor with the command:
-```
-sudo ./start_supervisor.sh
-```
+4. Start the NanoSat MO Supervisor with the command: ``` sudo ./start_supervisor.sh ```
 
 # Bugs Reporting
 Bug Reports can be submitted on: [Bug Reports]
