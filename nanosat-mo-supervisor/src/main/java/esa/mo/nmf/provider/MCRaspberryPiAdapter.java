@@ -26,7 +26,7 @@ package esa.mo.nmf.provider;
 import esa.mo.helpertools.helpers.HelperAttributes;
 import esa.mo.nmf.MCRegistration;
 import esa.mo.nmf.MonitorAndControlNMFAdapter;
-import esa.mo.sm.impl.util.ShellCommander;
+import esa.mo.helpertools.misc.ShellCommander;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
