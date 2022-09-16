@@ -35,6 +35,7 @@ import esa.mo.platform.impl.provider.raspberrypi.GPSSoftSimAdapter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ccsds.moims.mo.mal.MALException;
+import org.ccsds.moims.mo.platform.artificialintelligence.provider.ArtificialIntelligenceInheritanceSkeleton;
 
 /**
  *
@@ -96,6 +97,11 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
     @Override
     public SoftwareDefinedRadioProviderServiceImpl getSoftwareDefinedRadioService() {
         return this.sdrService;
+    }
+
+    @Override
+    public ArtificialIntelligenceInheritanceSkeleton getAIService() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
