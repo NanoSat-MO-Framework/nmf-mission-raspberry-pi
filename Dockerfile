@@ -7,7 +7,7 @@ FROM maven:3.8.6-openjdk-8 AS nmfMainBuilder
 
 WORKDIR /nmf/
 
-# clone NMF main repo and swith to phi-sat-2 branch
+# clone NMF main repo and switch to phi-sat-2 branch
 RUN git clone https://github.com/esa/nanosat-mo-framework.git
 RUN cd /nmf/nanosat-mo-framework && git checkout phi-sat-2
 
@@ -42,5 +42,5 @@ COPY --from=nmfRpiMissionBuilder /nmf/space-file-system/target/space-file-system
 RUN chmod +x fresh_install.sh && ./fresh_install.sh
 
 # start NMF Supervisor
-EXPOSE 1024
+# EXPOSE 1024
 CMD /nanosat-mo-framework/start_supervisor.sh
