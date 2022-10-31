@@ -82,7 +82,7 @@ sudo ./fresh_install.sh
 4. Start the NanoSat MO Supervisor with the command: ``` sudo ./start_supervisor.sh ```
 
 # Docker
-This mission comes with a Dockerfile that lets you deploy the NanoSat MO Framework to a Docker container. This allows for multiple NanoSat segments to be deployed on one machine, which can be useful for testing, development or simulation purposes. Use the following steps to create and start a container with the name _nmf-supervisor_:
+This mission comes with a Dockerfile that allows you to deploy the NanoSat MO Framework in a Docker container. This allows for multiple NanoSat segments to be deployed on one machine, which can be useful for testing, development or simulation purposes. Use the following steps to create and start a container with the name _nmf-supervisor_:
 
 1. Clone this repository and navigate to its root directory.
 2. Build Docker image: ``` sudo docker build -t nmf/raspberry-pi . ``` 
