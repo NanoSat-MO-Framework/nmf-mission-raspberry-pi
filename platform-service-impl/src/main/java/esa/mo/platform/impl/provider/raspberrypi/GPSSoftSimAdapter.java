@@ -61,7 +61,6 @@ public class GPSSoftSimAdapter extends GPSNMEAonlyAdapter {
 
     @Override
     public TLE getTLE() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }
