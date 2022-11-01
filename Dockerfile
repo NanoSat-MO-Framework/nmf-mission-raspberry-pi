@@ -1,6 +1,6 @@
 # Build and run the NMF Raspberry Pi mission.
 #
-# author: N. Wiegand
+# author: N Wiegand
 #
 
 FROM maven:3.8.6-openjdk-8 AS nmfMainBuilder

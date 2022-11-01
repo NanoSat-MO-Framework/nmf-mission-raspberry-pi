@@ -108,4 +108,9 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
         return this.sdrService;
     }
 
+    @Override
+    public ArtificialIntelligenceInheritanceSkeleton getAIService() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
