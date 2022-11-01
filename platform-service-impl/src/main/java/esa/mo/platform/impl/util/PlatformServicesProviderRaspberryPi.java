@@ -24,6 +24,7 @@
 package esa.mo.platform.impl.util;
 
 import esa.mo.com.impl.util.COMServicesProvider;
+import esa.mo.platform.impl.provider.gen.ArtificialIntelligenceProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.PowerControlProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.CameraProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.GPSProviderServiceImpl;
@@ -44,6 +45,9 @@ import org.ccsds.moims.mo.platform.artificialintelligence.provider.ArtificialInt
 public class PlatformServicesProviderRaspberryPi implements PlatformServicesProviderInterface {
 
     private final static Logger LOGGER = Logger.getLogger(PlatformServicesProviderRaspberryPi.class.getName());
+
+    private final ArtificialIntelligenceProviderServiceImpl aiService
+            = new ArtificialIntelligenceProviderServiceImpl();
 
     private final AutonomousADCSProviderServiceImpl adcsService
             = new AutonomousADCSProviderServiceImpl();
@@ -72,6 +76,11 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
             LOGGER.log(Level.SEVERE, "Could not load platform adapters "
                     + "(check for missing JARs and libraries)", error);
         }
+    }
+
+    @Override
+    public ArtificialIntelligenceInheritanceSkeleton getAIService() {
+        return this.aiService;
     }
 
     @Override

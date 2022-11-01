@@ -150,6 +150,7 @@
                             <fromDir>${mission.outputdir}/${out.folder.nmf}</fromDir>
                             <url>scp://root@192.168.178.33/</url>
                             <toDir>${out.folder.nmf}</toDir>
+                            <skip>false</skip>
                         </configuration>
                     </execution>
                 </executions>
