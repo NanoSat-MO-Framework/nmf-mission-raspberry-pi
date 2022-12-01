@@ -1,5 +1,4 @@
 #!/bin/sh
-# cd /nanosat-mo-framework/
 
 ###############################################################################
 # Set Kepler element variables: A[km];E;i[deg];RAAN[deg];ARG_PER[deg];TRUE_A[deg]
