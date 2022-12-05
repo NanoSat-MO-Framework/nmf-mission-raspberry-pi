@@ -61,7 +61,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
      */
     public static void main(final String args[]) throws Exception {
         NanoSatMOSupervisorRaspberryPiImpl supervisor = new NanoSatMOSupervisorRaspberryPiImpl();
-        supervisor.init(new MCRaspberryPiAdapter());
+        supervisor.init(new MCRaspberryPiAdapter(supervisor));
 
         /*
         File dir = AppStorage.getAppCacheDir();

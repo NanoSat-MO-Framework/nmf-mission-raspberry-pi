@@ -46,19 +46,19 @@ FROM adoptopenjdk/openjdk8:alpine-jre AS nmfRpiMissionRunner
 
 WORKDIR /nanosat-mo-framework/
 
-RUN apk update && apk add sudo
+RUN apk update && apk add sudo bash
 
 # copy files from previous build and install the NMF Supervisor
 COPY --from=nmfRpiMissionBuilder /nmf/space-file-system/target/space-file-system/nanosat-mo-framework/ /nanosat-mo-framework/
 RUN chmod +x fresh_install.sh && ./fresh_install.sh
 
 # copy apps
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/edge-ai/target/edge-ai-2.1.0-SNAPSHOT.nmf /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/benchmark/target/benchmark-2.1.0-SNAPSHOT.nmf /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/gps/target/gps-2.1.0-SNAPSHOT.nmf /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/camera/target/camera-2.1.0-SNAPSHOT.nmf /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/hello-world-full/target/hello-world-full-2.1.0-SNAPSHOT.nmf /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/publish-clock/target/publish-clock-2.1.0-SNAPSHOT.nmf /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/edge-ai/target/edge-ai-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/benchmark/target/benchmark-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/gps/target/gps-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/camera/target/camera-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/hello-world-full/target/hello-world-full-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/publish-clock/target/publish-clock-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
 
 # copy kepler elements configuration template for orbit simulation
 COPY ./space-file-system/src/main/resources/orbital-dynamics-configuration/* ./

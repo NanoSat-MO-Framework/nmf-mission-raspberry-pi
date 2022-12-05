@@ -76,6 +76,5 @@ public class GPSSoftSimAdapter extends GPSNMEAonlyAdapter {
     public TLE getTLE() {
         TLE tle = this.instrumentsSimulator.getSimulatorNode().getTLE();
         return tle;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
