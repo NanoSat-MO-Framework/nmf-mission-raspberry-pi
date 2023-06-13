@@ -3,7 +3,7 @@
 # author: N Wiegand
 #
 
-FROM maven:3.8.6-openjdk-8 AS nmfMainBuilder
+FROM maven:3.8.6-openjdk-11 AS nmfMainBuilder
 
 WORKDIR /nmf/
 
@@ -17,7 +17,7 @@ RUN cd /nmf/nanosat-mo-framework/sdk && mvn install
 
 
 
-FROM maven:3.8.6-openjdk-8 AS nmfRpiMissionBuilder
+FROM maven:3.8.6-openjdk-11 AS nmfRpiMissionBuilder
 
 WORKDIR /nmf/
 
@@ -33,7 +33,7 @@ RUN mvn install
 
 
 
-FROM adoptopenjdk/openjdk8:alpine-jre AS nmfRpiMissionRunner
+FROM adoptopenjdk/openjdk11:alpine-jre AS nmfRpiMissionRunner
 
 WORKDIR /nanosat-mo-framework/
 
