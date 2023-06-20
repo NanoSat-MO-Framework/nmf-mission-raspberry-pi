@@ -9,7 +9,7 @@ WORKDIR /nmf/
 
 # clone NMF main repo and switch to phi-sat-2 branch
 RUN git clone https://github.com/sachavg/nanosat-mo-framework.git
-RUN cd /nmf/nanosat-mo-framework && git checkout phi-sat-2
+RUN cd /nmf/nanosat-mo-framework && git checkout testing-isolation
 
 # build phi-sat-2 branch of NMF main repo 
 RUN cd /nmf/nanosat-mo-framework && mvn install 
@@ -17,7 +17,7 @@ RUN cd /nmf/nanosat-mo-framework/sdk && mvn install
 
 
 
-FROM maven:3.8.6-openjdk-11 AS nmfRpiMissionBuilder
+FROM maven:3.8.6-openjdk-8 AS nmfRpiMissionBuilder
 
 WORKDIR /nmf/
 
@@ -33,7 +33,7 @@ RUN mvn install
 
 
 
-FROM adoptopenjdk/openjdk11:alpine-jre AS nmfRpiMissionRunner
+FROM adoptopenjdk/openjdk8:alpine-jre AS nmfRpiMissionRunner
 
 WORKDIR /nanosat-mo-framework/
 
