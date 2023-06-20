@@ -63,7 +63,7 @@ rule_2="/usr/sbin/deluser"
 rule_3="/bin/su - $user_nmf_app_prefix*"
 rule_4="/bin/chmod --recursive 770 $dir_home*, /bin/chmod --recursive 750 $dir_nmf*"
 rule_5="/bin/chgrp"
-rule_X="/usr/sbin/chpasswd"
+rule_6="/usr/sbin/chpasswd"
 # Note: Rule 3 assumes that the Home directory is : /home/
 # Rule 5 can also be: "/bin/su [!-]*, !/bin/su *root*"
 # The above was obtained here: https://www.sudo.ws/man/1.8.17/sudoers.man.html
@@ -78,6 +78,7 @@ $user_nmf_admin ALL=(ALL) NOPASSWD:$rule_2
 $user_nmf_admin ALL=(ALL) NOPASSWD:$rule_3
 $user_nmf_admin ALL=(ALL) NOPASSWD:$rule_4
 $user_nmf_admin ALL=(ALL) NOPASSWD:$rule_5
+$user_nmf_admin ALL=(ALL) NOPASSWD:$rule_6
 "
 echo "$rules_all" | sudo tee $rules_path
 chmod 440 $rules_path

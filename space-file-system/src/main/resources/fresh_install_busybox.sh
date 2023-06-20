@@ -65,12 +65,13 @@ rule_2="/usr/sbin/deluser"
 rule_3="/bin/su - $user_nmf_app_prefix*"
 rule_4="/bin/chmod -R 770 $dir_home*, /bin/chmod -R 750 $dir_nmf*"
 rule_5="/bin/chgrp"
-rule_X="/usr/sbin/chpasswd"
+rule_6="/usr/sbin/chpasswd"
+rule_7="/usr/sbin/addgroup"
 # Note: Rule 3 assumes that the Home directory is : /home/
 # Rule 5 can also be: "/bin/su [!-]*, !/bin/su *root*"
 # The above was obtained here: https://www.sudo.ws/man/1.8.17/sudoers.man.html
 # To be removed: Rule 4
-rules_text="$rule_1, $rule_2, $rule_3, $rule_4, $rule_5, $rule_6"
+rules_text="$rule_1, $rule_2, $rule_3, $rule_4, $rule_5, $rule_6, $rule_7"
 rules_path="/etc/sudoers.d/$user_nmf_admin"
 rules_all="#
 # This file was generated during the installation of the NanoSat MO Framework.
@@ -80,6 +81,8 @@ $user_nmf_admin ALL=(ALL) NOPASSWD:$rule_2
 $user_nmf_admin ALL=(ALL) NOPASSWD:$rule_3
 $user_nmf_admin ALL=(ALL) NOPASSWD:$rule_4
 $user_nmf_admin ALL=(ALL) NOPASSWD:$rule_5
+$user_nmf_admin ALL=(ALL) NOPASSWD:$rule_6
+$user_nmf_admin ALL=(ALL) NOPASSWD:$rule_7
 "
 echo "$rules_all" | sudo tee $rules_path
 chmod 440 $rules_path
