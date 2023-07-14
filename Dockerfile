@@ -9,7 +9,7 @@ WORKDIR /nmf/
 
 # clone NMF main repo and switch to phi-sat-2 branch
 RUN git clone https://github.com/esa/nanosat-mo-framework.git
-RUN cd /nmf/nanosat-mo-framework && git checkout testing-isolation
+RUN cd /nmf/nanosat-mo-framework && git checkout phi-sat-2
 
 # build phi-sat-2 branch of NMF main repo 
 RUN cd /nmf/nanosat-mo-framework && mvn install 
