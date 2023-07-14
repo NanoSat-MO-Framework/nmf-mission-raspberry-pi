@@ -27,7 +27,7 @@ import esa.mo.platform.impl.provider.gen.GPSNMEAonlyAdapter;
 import java.io.IOException;
 import org.ccsds.moims.mo.platform.gps.structures.Position;
 import org.ccsds.moims.mo.platform.gps.structures.SatelliteInfoList;
-import org.orekit.propagation.analytical.tle.TLE;
+
 
 /**
  * A simple GPS Adapter for testing purposes.
@@ -57,10 +57,5 @@ public class GPSSoftSimAdapter extends GPSNMEAonlyAdapter {
     @Override
     public SatelliteInfoList getSatelliteInfoList() {
         return null;
-    }
-
-//    @Override
-    public TLE getTLE() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
