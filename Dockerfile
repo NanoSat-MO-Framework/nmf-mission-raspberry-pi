@@ -8,7 +8,7 @@ FROM maven:3.8.6-openjdk-11 AS nmfMainBuilder
 WORKDIR /nmf/
 
 # clone NMF main repo and switch to phi-sat-2 branch
-RUN git clone https://github.com/sachavg/nanosat-mo-framework.git
+RUN git clone https://github.com/esa/nanosat-mo-framework.git
 RUN cd /nmf/nanosat-mo-framework && git checkout testing-isolation
 
 # build phi-sat-2 branch of NMF main repo 
