@@ -39,8 +39,10 @@ WORKDIR /nanosat-mo-framework/
 
 # copy files from previous build and install the NMF Supervisor
 COPY --from=nmfRpiMissionBuilder /nmf/space-file-system/target/space-file-system/nanosat-mo-framework/ /nanosat-mo-framework/
-RUN chmod +x fresh_install.sh && ./fresh_install.sh
+RUN apk add --no-cache sudo
+
+RUN chmod +x fresh_install_busybox.sh && ./fresh_install_busybox.sh
 
 # start NMF Supervisor
 # EXPOSE 1024
-CMD /nanosat-mo-framework/start_supervisor.sh
+CMD su nmf-admin -c /nanosat-mo-framework/start_supervisor.sh

@@ -78,10 +78,10 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
         }
     }
 
-    @Override
-    public ArtificialIntelligenceInheritanceSkeleton getAIService() {
-        return this.aiService;
-    }
+//    @Override
+//    public ArtificialIntelligenceInheritanceSkeleton getAIService() {
+//        return this.aiService;
+//    }
 
     @Override
     public GPSProviderServiceImpl getGPSService() {
