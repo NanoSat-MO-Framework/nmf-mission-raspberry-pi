@@ -3,7 +3,7 @@
 # author: N Wiegand
 #
 
-FROM maven:3.8.6-openjdk-11 AS nmfMainBuilder
+FROM maven:3.8.6-openjdk-8 AS nmfMainBuilder
 
 WORKDIR /nmf/
 
