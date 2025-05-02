@@ -137,4 +137,10 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public boolean hasFixedResolutions() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

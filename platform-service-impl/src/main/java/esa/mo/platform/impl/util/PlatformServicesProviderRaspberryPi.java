@@ -32,11 +32,14 @@ import esa.mo.platform.impl.provider.gen.AutonomousADCSProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.OpticalDataReceiverProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.SoftwareDefinedRadioProviderServiceImpl;
 import esa.mo.platform.impl.provider.raspberrypi.CameraSingleImageAdapter;
+import esa.mo.platform.impl.provider.raspberrypi.GPSProviderServiceWithTLEImpl;
 import esa.mo.platform.impl.provider.raspberrypi.GPSSoftSimAdapter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ccsds.moims.mo.mal.MALException;
 import org.ccsds.moims.mo.platform.artificialintelligence.provider.ArtificialIntelligenceInheritanceSkeleton;
+
+import opssat.simulator.main.ESASimulator;
 
 /**
  *
@@ -55,8 +58,8 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
     private final CameraProviderServiceImpl cameraService
             = new CameraProviderServiceImpl();
 
-    private final GPSProviderServiceImpl gpsService
-            = new GPSProviderServiceImpl();
+    private final GPSProviderServiceWithTLEImpl gpsService
+            = new GPSProviderServiceWithTLEImpl();
 
     private final OpticalDataReceiverProviderServiceImpl optrxService
             = new OpticalDataReceiverProviderServiceImpl();
@@ -67,6 +70,7 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
     private final SoftwareDefinedRadioProviderServiceImpl sdrService
             = new SoftwareDefinedRadioProviderServiceImpl();
 
+    @Override
     public void init(COMServicesProvider comServices) throws MALException {
         try {
             GPSSoftSimAdapter gpsAdapter = new GPSSoftSimAdapter();
@@ -78,10 +82,6 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
         }
     }
 
-    @Override
-    public ArtificialIntelligenceInheritanceSkeleton getAIService() {
-        return this.aiService;
-    }
 
     @Override
     public GPSProviderServiceImpl getGPSService() {

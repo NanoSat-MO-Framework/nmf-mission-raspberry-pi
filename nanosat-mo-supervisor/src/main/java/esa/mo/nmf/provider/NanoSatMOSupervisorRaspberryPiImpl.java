@@ -31,7 +31,10 @@ import esa.mo.nmf.MonitorAndControlNMFAdapter;
 import esa.mo.nmf.nanosatmosupervisor.NanoSatMOSupervisor;
 import esa.mo.nmf.nmfpackage.NMFPackagePMBackend;
 import esa.mo.platform.impl.util.PlatformServicesConsumer;
+import esa.mo.platform.impl.util.PlatformServicesProviderInterface;
 import esa.mo.platform.impl.util.PlatformServicesProviderRaspberryPi;
+import esa.mo.platform.impl.util.PlatformServicesProviderSoftSim;
+
 import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -47,7 +50,8 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
 
     private static final String DIR_PACKAGES = "packages";
 
-    private PlatformServicesProviderRaspberryPi platformServicesRaspberryPi;
+    //  private PlatformServicesProviderSoftSim platformServicesProviderSoftSim;
+    private PlatformServicesProviderInterface platformServicesRaspberryPi;
 
     /**
      * Main command line entry point.
@@ -57,7 +61,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
      */
     public static void main(final String args[]) throws Exception {
         NanoSatMOSupervisorRaspberryPiImpl supervisor = new NanoSatMOSupervisorRaspberryPiImpl();
-        supervisor.init(new MCRaspberryPiAdapter());
+        supervisor.init(new MCRaspberryPiAdapter(supervisor));
 
         /*
         File dir = AppStorage.getAppCacheDir();
@@ -94,8 +98,15 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
     @Override
     public void initPlatformServices(COMServicesProvider comServices) {
         try {
-            platformServicesRaspberryPi = new PlatformServicesProviderRaspberryPi();
+
+            // TODO: chose based on system properties
+            if (false) {
+                platformServicesRaspberryPi = new PlatformServicesProviderRaspberryPi();
+            } else {            
+                platformServicesRaspberryPi = new PlatformServicesProviderSoftSim();
+            }
             platformServicesRaspberryPi.init(comServices);
+
         } catch (MALException ex) {
             Logger.getLogger(NanoSatMOSupervisorRaspberryPiImpl.class.getName()).log(
                     Level.SEVERE, "Something went wrong!", ex);

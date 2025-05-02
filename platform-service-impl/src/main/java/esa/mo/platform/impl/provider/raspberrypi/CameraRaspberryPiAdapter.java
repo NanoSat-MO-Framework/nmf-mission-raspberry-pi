@@ -105,5 +105,11 @@ public class CameraRaspberryPiAdapter implements CameraAdapterInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public boolean hasFixedResolutions() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 
 }

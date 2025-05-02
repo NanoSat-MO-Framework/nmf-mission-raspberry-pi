@@ -24,6 +24,9 @@
 package esa.mo.platform.impl.provider.raspberrypi;
 
 import esa.mo.platform.impl.provider.gen.GPSNMEAonlyAdapter;
+import esa.mo.platform.impl.provider.gen.PowerControlAdapterInterface;
+import opssat.simulator.main.ESASimulator;
+
 import java.io.IOException;
 import org.ccsds.moims.mo.platform.gps.structures.Position;
 import org.ccsds.moims.mo.platform.gps.structures.SatelliteInfoList;
@@ -36,7 +39,18 @@ import org.orekit.propagation.analytical.tle.TLE;
  */
 public class GPSSoftSimAdapter extends GPSNMEAonlyAdapter {
 
+
+    private ESASimulator instrumentsSimulator = null;
+    private PowerControlAdapterInterface pcAdapter = null;
+
     public GPSSoftSimAdapter() {
+
+    }
+
+    public GPSSoftSimAdapter(ESASimulator instrumentsSimulator, PowerControlAdapterInterface pcAdapter)
+    {
+      this.instrumentsSimulator = instrumentsSimulator;
+      this.pcAdapter = pcAdapter;
     }
 
     @Override
@@ -59,8 +73,8 @@ public class GPSSoftSimAdapter extends GPSNMEAonlyAdapter {
         return null;
     }
 
-    @Override
     public TLE getTLE() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TLE tle = this.instrumentsSimulator.getSimulatorNode().getTLE();
+        return tle;
     }
 }
