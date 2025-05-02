@@ -78,15 +78,12 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
     @Override
     public Picture takePicture(CameraSettings settings) throws IOException {
         // Eiffel Tower (example)
-        Picture picture = new Picture();
-        picture.setTimestamp(Time.now());
-        picture.setSettings(settings);
-
+        Blob content = null;
         try {
             String fileName = "picture_demo.jpg";
             ClassLoader classLoader = getClass().getClassLoader();
             InputStream in = classLoader.getResourceAsStream(fileName);
-            
+
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             byte[] buf = new byte[1024];
             int n = 0;
@@ -96,8 +93,7 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
             out.close();
             in.close();
             byte[] response = out.toByteArray();
-            
-            picture.setContent(new Blob(response));
+            content = new Blob(response);
         } catch (java.net.UnknownHostException ex) {
             Logger.getLogger(CameraSingleImageAdapter.class.getName()).log(
                     Level.SEVERE, "Maybe there is no internet?", ex);
@@ -110,7 +106,7 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
                     Level.SEVERE, null, ex);
         }
 
-        return picture;
+        return new Picture(Time.now(), settings, content);
     }
 
     @Override

@@ -37,8 +37,8 @@ import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.ccsds.moims.mo.mal.MALException;
 import org.ccsds.moims.mo.mal.helpertools.helpers.HelperMisc;
+import org.ccsds.moims.mo.mal.MALException;
 
 /**
  * The implementation of the NanoSat MO Supervisor for a Raspberry Pi.
@@ -97,8 +97,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
     @Override
     public void initPlatformServices(COMServicesProvider comServices) {
         try {
-
-            // TODO: chose based on system properties
+            // TODO: choose based on system properties
             if (false) {
                 platformServicesRaspberryPi = new PlatformServicesProviderRaspberryPi();
             } else {

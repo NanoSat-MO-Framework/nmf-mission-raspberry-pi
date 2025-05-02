@@ -39,8 +39,6 @@ import java.util.logging.Logger;
 import org.ccsds.moims.mo.mal.MALException;
 import org.ccsds.moims.mo.platform.artificialintelligence.provider.ArtificialIntelligenceInheritanceSkeleton;
 
-import opssat.simulator.main.ESASimulator;
-
 /**
  *
  *
@@ -82,7 +80,6 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
         }
     }
 
-
     @Override
     public GPSProviderServiceImpl getGPSService() {
         return this.gpsService;
@@ -110,7 +107,8 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
 
     @Override
     public ArtificialIntelligenceInheritanceSkeleton getAIService() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //return this.aiService;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
