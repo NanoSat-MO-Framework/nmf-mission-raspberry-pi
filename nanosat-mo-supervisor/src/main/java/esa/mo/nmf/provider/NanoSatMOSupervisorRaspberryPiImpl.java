@@ -24,7 +24,6 @@
 package esa.mo.nmf.provider;
 
 import esa.mo.com.impl.util.COMServicesProvider;
-import esa.mo.helpertools.helpers.HelperMisc;
 import esa.mo.helpertools.misc.Const;
 import esa.mo.nmf.AppStorage;
 import esa.mo.nmf.MonitorAndControlNMFAdapter;
@@ -34,12 +33,12 @@ import esa.mo.platform.impl.util.PlatformServicesConsumer;
 import esa.mo.platform.impl.util.PlatformServicesProviderInterface;
 import esa.mo.platform.impl.util.PlatformServicesProviderRaspberryPi;
 import esa.mo.platform.impl.util.PlatformServicesProviderSoftSim;
-
 import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ccsds.moims.mo.mal.MALException;
+import org.ccsds.moims.mo.mal.helpertools.helpers.HelperMisc;
 
 /**
  * The implementation of the NanoSat MO Supervisor for a Raspberry Pi.
@@ -102,7 +101,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
             // TODO: chose based on system properties
             if (false) {
                 platformServicesRaspberryPi = new PlatformServicesProviderRaspberryPi();
-            } else {            
+            } else {
                 platformServicesRaspberryPi = new PlatformServicesProviderSoftSim();
             }
             platformServicesRaspberryPi.init(comServices);
@@ -111,6 +110,11 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
             Logger.getLogger(NanoSatMOSupervisorRaspberryPiImpl.class.getName()).log(
                     Level.SEVERE, "Something went wrong!", ex);
         }
+    }
+
+    @Override
+    protected void startStatusTracking() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

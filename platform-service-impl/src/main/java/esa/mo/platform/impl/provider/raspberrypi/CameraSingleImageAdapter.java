@@ -23,7 +23,6 @@
  */
 package esa.mo.platform.impl.provider.raspberrypi;
 
-import esa.mo.helpertools.helpers.HelperTime;
 import esa.mo.platform.impl.provider.gen.CameraAdapterInterface;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,6 +33,7 @@ import java.util.logging.Logger;
 import org.ccsds.moims.mo.mal.MALException;
 import org.ccsds.moims.mo.mal.structures.Blob;
 import org.ccsds.moims.mo.mal.structures.Duration;
+import org.ccsds.moims.mo.mal.structures.Time;
 import org.ccsds.moims.mo.mal.structures.UInteger;
 import org.ccsds.moims.mo.platform.camera.structures.CameraSettings;
 import org.ccsds.moims.mo.platform.camera.structures.Picture;
@@ -79,7 +79,7 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
     public Picture takePicture(CameraSettings settings) throws IOException {
         // Eiffel Tower (example)
         Picture picture = new Picture();
-        picture.setTimestamp(HelperTime.getTimestampMillis());
+        picture.setTimestamp(Time.now());
         picture.setSettings(settings);
 
         try {

@@ -23,19 +23,18 @@
  */
 package esa.mo.nmf.provider;
 
-import esa.mo.helpertools.helpers.HelperMisc;
 import java.util.Properties;
+import org.ccsds.moims.mo.mal.helpertools.helpers.HelperMisc;
 
 /**
  *
  * @author Cesar Coelho
  */
 public class PropertiesSettings {
-    
-    
-    public static Properties getProperties(){
+
+    public static Properties getProperties() {
         Properties props = new Properties();
-        
+
         // To form the Network zone
         props.put(HelperMisc.PROP_ORGANIZATION_NAME, "nmf");
         props.put(HelperMisc.PROP_MISSION_NAME, "rpi");
@@ -47,5 +46,5 @@ public class PropertiesSettings {
 
         return props;
     }
-    
+
 }
