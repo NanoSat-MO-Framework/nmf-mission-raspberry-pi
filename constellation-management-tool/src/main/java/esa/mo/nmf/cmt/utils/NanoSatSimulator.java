@@ -62,6 +62,12 @@ public class NanoSatSimulator extends NanoSat {
         String image = "nmf/raspberry-pi";
         this.simulatorApi = new DockerApi(image);
         // this.simulatorApi = new KubernetesApi();
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                deleteIfSimulation();
+            }
+        });
     }
 
     /**
