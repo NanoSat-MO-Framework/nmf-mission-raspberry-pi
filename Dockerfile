@@ -54,11 +54,11 @@ RUN chmod +x fresh_install.sh && ./fresh_install.sh
 
 # copy apps
 COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/edge-ai/target/*.nmfpack /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/benchmark/target/benchmark-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/gps/target/gps-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/camera/target/camera-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/hello-world-full/target/hello-world-full-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/publish-clock/target/publish-clock-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/benchmark/target/*.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/gps/target/*.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/camera/target/*.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/hello-world-full/target/*.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/publish-clock/target/*.nmfpack /nanosat-mo-framework/packages
 
 # copy kepler elements configuration template for orbit simulation
 COPY ./space-file-system/src/main/resources/orbital-dynamics-configuration/* ./
