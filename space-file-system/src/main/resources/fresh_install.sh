@@ -61,7 +61,7 @@ echo $user_nmf_admin:$user_nmf_admin_password | chpasswd
 rule_1="/usr/sbin/adduser"
 rule_2="/usr/sbin/deluser"
 rule_3="/bin/su - $user_nmf_app_prefix*"
-rule_4="/bin/chmod --recursive 770 $dir_home*, /bin/chmod --recursive 750 $dir_nmf*"
+rule_4="/bin/chmod -R 770 $dir_home*, /bin/chmod -R 750 $dir_nmf*"
 rule_5="/bin/chgrp"
 rule_6="/usr/sbin/chpasswd"
 # Note: Rule 3 assumes that the Home directory is : /home/
