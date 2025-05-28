@@ -14,8 +14,7 @@ RUN cd /nmf/nanosat-mo-framework && git checkout v4.0
 RUN sed -i 's/<module>camera-acquisitor-system-ground<\/module>/<!--<module>camera-acquisitor-system-ground<\/module>-->/g' /nmf/nanosat-mo-framework/sdk/examples/ground/pom.xml
 
 # build phi-sat-2 branch of NMF main repo 
-RUN cd /nmf/nanosat-mo-framework && mvn install 
-RUN cd /nmf/nanosat-mo-framework/sdk && mvn install
+RUN cd /nmf/nanosat-mo-framework && mvn install
 
 # build some apps
 RUN cd /nmf/nanosat-mo-framework/sdk/examples/space/edge-ai && mvn clean install -Pgenerate-nmf-package
