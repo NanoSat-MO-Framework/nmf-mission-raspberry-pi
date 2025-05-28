@@ -52,9 +52,7 @@ public class ConnectNanoSatGui extends JFrame {
      * @param cmt constellation manager object
      */
     public ConnectNanoSatGui(ConstellationManagementTool cmt) {
-
         this.cmt = cmt;
-
         this.setContentPane(connectNanoSatPanel);
         this.setTitle("Connect to NanoSat Segments");
         this.setSize(400, 123);
@@ -112,7 +110,8 @@ public class ConnectNanoSatGui extends JFrame {
             this.dispose();
 
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, "Failed to add NanoSat Segments to constellation: ", ex.getMessage());
+            Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE,
+                    "Failed to add NanoSat Segments to constellation: ", ex.getMessage());
             JOptionPane.showMessageDialog(null, "Failed to add NanoSat Segments to constellation: Names must be unique!", "Error", JOptionPane.INFORMATION_MESSAGE);
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "File not found! Please select a valid .csv file.", "Error", JOptionPane.INFORMATION_MESSAGE);

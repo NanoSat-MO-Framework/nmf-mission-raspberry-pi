@@ -44,8 +44,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PackageManagerGui extends JFrame {
+
     private static final Logger LOGGER = Logger.getLogger(ConstellationManagementTool.class.getName());
-    private final ConstellationManagementTool cmt;
     private final ArrayList<NanoSat> selectedNanoSatSegments;
     private JScrollPane spPackageTable;
     private JButton btnInstall;
@@ -61,8 +61,7 @@ public class PackageManagerGui extends JFrame {
      * This Class manages the Packages that are available on the selected NanoSats.
      */
     public PackageManagerGui(ConstellationManagementTool ncm, ArrayList<NanoSat> selectedNanoSatSegments) {
-        this.cmt = ncm;
-        this.cmt.connectToConstellationProviders();
+        ncm.connectToConstellationProviders();
         this.selectedNanoSatSegments = selectedNanoSatSegments;
 
         this.setContentPane(PackageManagerPanel);

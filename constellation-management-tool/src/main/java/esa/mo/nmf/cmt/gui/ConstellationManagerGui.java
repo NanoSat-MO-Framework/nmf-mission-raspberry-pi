@@ -27,7 +27,6 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import esa.mo.nmf.cmt.ConstellationManagementTool;
 import esa.mo.nmf.cmt.utils.NanoSat;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -39,11 +38,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConstellationManagerGui extends JFrame {
+
     private final ConstellationManagementTool cmt;
     private JLabel lblConstellationName;
     private JPanel cmtPanel;
@@ -70,11 +69,8 @@ public class ConstellationManagerGui extends JFrame {
      * @param cmt constellation manager object
      */
     public ConstellationManagerGui(ConstellationManagementTool cmt) {
-
         this.cmt = cmt;
-
         this.lblNanoSatSegmentNumber.setText("0");
-
         this.setContentPane(cmtPanel);
         this.setTitle("CMT: Constellation Management Tool");
         this.setSize(700, 500);
@@ -119,9 +115,11 @@ public class ConstellationManagerGui extends JFrame {
                 for (int i = 0; i < tblNanoSatSegments.getRowCount(); i++) {
                     boolean checked = Boolean.parseBoolean(tblNanoSatSegments.getValueAt(i, 0).toString());
                     if (checked) {
-
-                        Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.INFO, "{0} checked", new Object[]{cmt.getNanoSatSegmentByName(tblNanoSatSegments.getValueAt(i, 1).toString()).getName()});
-                        selectedNanoSatSegments.add(cmt.getNanoSatSegmentByName(tblNanoSatSegments.getValueAt(i, 1).toString()));
+                        String id = tblNanoSatSegments.getValueAt(i, 1).toString();
+                        NanoSat nanosat = cmt.getNanoSatSegmentByName(id);
+                        Logger.getLogger(ConstellationManagementTool.class.getName()).log(
+                                Level.INFO, "{0} checked", new Object[]{nanosat.getName()});
+                        selectedNanoSatSegments.add(nanosat);
                     }
                 }
 
@@ -136,9 +134,11 @@ public class ConstellationManagerGui extends JFrame {
                 for (int i = 0; i < tblNanoSatSegments.getRowCount(); i++) {
                     boolean checked = Boolean.parseBoolean(tblNanoSatSegments.getValueAt(i, 0).toString());
                     if (checked) {
-
-                        Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.INFO, "{0} checked", new Object[]{cmt.getNanoSatSegmentByName(tblNanoSatSegments.getValueAt(i, 1).toString()).getName()});
-                        selectedNanoSatSegments.add(cmt.getNanoSatSegmentByName(tblNanoSatSegments.getValueAt(i, 1).toString()));
+                        String id = tblNanoSatSegments.getValueAt(i, 1).toString();
+                        NanoSat nanosat = cmt.getNanoSatSegmentByName(id);
+                        Logger.getLogger(ConstellationManagementTool.class.getName()).log(
+                                Level.INFO, "{0} checked", new Object[]{nanosat.getName()});
+                        selectedNanoSatSegments.add(nanosat);
                     }
                 }
 
@@ -242,7 +242,7 @@ public class ConstellationManagerGui extends JFrame {
                     // ipAddress = null
                 }
 
-                String type = (Objects.equals(nanoSat.getClass().getSimpleName(), "NanoSatSimulator") ? "Simulation" : "NanoSat");
+                String type = ("NanoSatSimulator".equals(nanoSat.getClass().getSimpleName()) ? "Simulation" : "NanoSat");
 
                 addRowToNanoSatSegmentList(new Object[]{false, nanoSat.getName(), ipAddress, type});
                 int cntr = Integer.parseInt(lblNanoSatSegmentNumber.getText());
@@ -253,7 +253,6 @@ public class ConstellationManagerGui extends JFrame {
     }
 
     public void removeAllSimulations() {
-
         JDialog dialog = new JDialog();
         dialog.setTitle("Removing Docker containers");
         dialog.setSize(420, 150);
