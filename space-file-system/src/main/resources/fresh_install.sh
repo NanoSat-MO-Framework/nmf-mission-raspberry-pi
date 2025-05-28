@@ -103,7 +103,8 @@ cd \${0%/*}
 
 JAVA_ORACLE_8=/nanosat-mo-framework/java/jdk-8-oracle-arm32-vfp-hflt/bin/java
 JAVA_OPENJDK_8=/nanosat-mo-framework/java/jdk8u292-b10-aarch32-20210423-jre/bin/java
-JAVA_CMD=\$JAVA_OPENJDK_8
+#JAVA_CMD=\$JAVA_OPENJDK_8
+JAVA_CMD=java
 JAVA_LOGGER=/nanosat-mo-framework/etc/logging.properties
 NMF_VERSION=4.0-SNAPSHOT
 
