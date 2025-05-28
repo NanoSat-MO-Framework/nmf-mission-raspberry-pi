@@ -53,7 +53,7 @@ COPY --from=nmfRpiMissionBuilder /nmf/space-file-system/target/space-file-system
 RUN chmod +x fresh_install.sh && ./fresh_install.sh
 
 # copy apps
-COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/edge-ai/target/edge-ai-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
+COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/edge-ai/target/*.nmfpack /nanosat-mo-framework/packages
 COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/benchmark/target/benchmark-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
 COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/gps/target/gps-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
 COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/camera/target/camera-2.1.0-SNAPSHOT.nmfpack /nanosat-mo-framework/packages
