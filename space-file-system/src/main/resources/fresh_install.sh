@@ -118,7 +118,7 @@ mkdir -p \$LOG_PATH
 \$JAVA_CMD \\
     -Xms16M \\
     -Djava.util.logging.config.file=\$JAVA_LOGGER \\
-    -classpath \"lib/*:jars-mission/*\" \\
+    -classpath \"libs/*:jars-mission/*\" \\
     esa.mo.nmf.provider.NanoSatMOSupervisorRaspberryPiImpl  \\
     2>&1 | tee -a \$LOG_PATH/\$FILENAME
 "
