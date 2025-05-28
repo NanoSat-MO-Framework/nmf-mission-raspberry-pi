@@ -9,7 +9,7 @@ WORKDIR /nmf/
 
 # clone NMF main repo and switch to phi-sat-2 branch
 RUN git clone https://github.com/esa/nanosat-mo-framework.git
-RUN cd /nmf/nanosat-mo-framework && git checkout constellation
+RUN cd /nmf/nanosat-mo-framework && git checkout v4.0
 
 RUN sed -i 's/<module>camera-acquisitor-system-ground<\/module>/<!--<module>camera-acquisitor-system-ground<\/module>-->/g' /nmf/nanosat-mo-framework/sdk/examples/ground/pom.xml
 
