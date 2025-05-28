@@ -99,11 +99,31 @@ create_dir(){
 }
 
 # Create the start script for the nmf: start_supervisor.sh
-cat > $start_script_name <<EOF
-#!/bin/sh
+start_script_content="#!/bin/sh
 cd \${0%/*}
-java -classpath "libs/*" $supervisor_mainclass
-EOF
+
+JAVA_ORACLE_8=/nanosat-mo-framework/java/jdk-8-oracle-arm32-vfp-hflt/bin/java
+JAVA_OPENJDK_8=/nanosat-mo-framework/java/jdk8u292-b10-aarch32-20210423-jre/bin/java
+#JAVA_CMD=\$JAVA_OPENJDK_8
+JAVA_CMD=java
+JAVA_LOGGER=/nanosat-mo-framework/etc/logging.properties
+NMF_VERSION=4.0-SNAPSHOT
+
+# Prepare path for Supervisor logs
+NOW=\$(date +\"%F\")
+FILENAME=supervisor_\$NOW.log
+LOG_PATH=/nanosat-mo-framework/logs/supervisor
+mkdir -p \$LOG_PATH
+
+\$JAVA_CMD \\
+    -Xms16M \\
+    -Djava.util.logging.config.file=\$JAVA_LOGGER \\
+    -classpath \"lib/*:jars-mission/*\" \\
+    esa.mo.nmf.provider.NanoSatMOSupervisorRaspberryPiImpl  \\
+    2>&1 | tee -a \$LOG_PATH/\$FILENAME
+"
+
+echo "$start_script_content" | sudo tee $start_script_name
 
 chown -R $user_nmf_admin:$user_nmf_admin .
 chmod 775 .

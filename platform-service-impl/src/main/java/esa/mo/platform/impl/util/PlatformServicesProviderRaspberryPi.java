@@ -32,6 +32,7 @@ import esa.mo.platform.impl.provider.gen.AutonomousADCSProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.OpticalDataReceiverProviderServiceImpl;
 import esa.mo.platform.impl.provider.gen.SoftwareDefinedRadioProviderServiceImpl;
 import esa.mo.platform.impl.provider.raspberrypi.CameraSingleImageAdapter;
+import esa.mo.platform.impl.provider.raspberrypi.GPSProviderServiceWithTLEImpl;
 import esa.mo.platform.impl.provider.raspberrypi.GPSSoftSimAdapter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,8 +56,8 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
     private final CameraProviderServiceImpl cameraService
             = new CameraProviderServiceImpl();
 
-    private final GPSProviderServiceImpl gpsService
-            = new GPSProviderServiceImpl();
+    private final GPSProviderServiceWithTLEImpl gpsService
+            = new GPSProviderServiceWithTLEImpl();
 
     private final OpticalDataReceiverProviderServiceImpl optrxService
             = new OpticalDataReceiverProviderServiceImpl();
@@ -67,6 +68,7 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
     private final SoftwareDefinedRadioProviderServiceImpl sdrService
             = new SoftwareDefinedRadioProviderServiceImpl();
 
+    @Override
     public void init(COMServicesProvider comServices) throws MALException {
         try {
             GPSSoftSimAdapter gpsAdapter = new GPSSoftSimAdapter();
@@ -77,11 +79,6 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
                     + "(check for missing JARs and libraries)", error);
         }
     }
-
-//    @Override
-//    public ArtificialIntelligenceInheritanceSkeleton getAIService() {
-//        return this.aiService;
-//    }
 
     @Override
     public GPSProviderServiceImpl getGPSService() {
@@ -110,7 +107,8 @@ public class PlatformServicesProviderRaspberryPi implements PlatformServicesProv
 
     @Override
     public ArtificialIntelligenceInheritanceSkeleton getAIService() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //return this.aiService;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

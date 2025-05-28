@@ -25,8 +25,6 @@ package esa.mo.nmf.groundmoproxy;
 
 import esa.mo.com.impl.consumer.ArchiveSyncConsumerServiceImpl;
 import esa.mo.com.impl.util.COMObjectStructure;
-import esa.mo.helpertools.connections.SingleConnectionDetails;
-import esa.mo.helpertools.helpers.HelperTime;
 import esa.mo.mc.impl.consumer.ActionConsumerServiceImpl;
 import esa.mo.mc.impl.proxy.ActionProxyServiceImpl;
 import esa.mo.sm.impl.provider.AppsLauncherManager;
@@ -54,15 +52,17 @@ import org.ccsds.moims.mo.common.directory.structures.ServiceFilter;
 import org.ccsds.moims.mo.common.structures.ServiceKey;
 import org.ccsds.moims.mo.mal.MALException;
 import org.ccsds.moims.mo.mal.MALInteractionException;
-import org.ccsds.moims.mo.mal.MALStandardError;
-import org.ccsds.moims.mo.mal.structures.ElementList;
+import org.ccsds.moims.mo.mal.MOErrorException;
+import org.ccsds.moims.mo.mal.helpertools.connections.SingleConnectionDetails;
+import org.ccsds.moims.mo.mal.helpertools.helpers.HelperTime;
 import org.ccsds.moims.mo.mal.structures.FineTime;
+import org.ccsds.moims.mo.mal.structures.HeterogeneousList;
 import org.ccsds.moims.mo.mal.structures.Identifier;
 import org.ccsds.moims.mo.mal.structures.IdentifierList;
-import org.ccsds.moims.mo.mal.structures.UIntegerList;
 import org.ccsds.moims.mo.mal.structures.UOctet;
 import org.ccsds.moims.mo.mal.structures.URI;
 import org.ccsds.moims.mo.mal.structures.UShort;
+import org.ccsds.moims.mo.mal.structures.UShortList;
 import org.ccsds.moims.mo.mal.transport.MALMessage;
 import org.ccsds.moims.mo.mc.action.ActionHelper;
 
@@ -123,10 +123,9 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
         // Add the Action service rerouting stuff
         COMService serviceType = ActionHelper.ACTION_SERVICE;
         ServiceKey serviceKey = new ServiceKey(serviceType.getArea().getNumber(),
-                serviceType.getNumber(), serviceType.getArea().getVersion());
-        ServiceFilter sf = new ServiceFilter(new Identifier("*"),
-                domain, new Identifier("*"), null, new Identifier("*"),
-                serviceKey, new UIntegerList());
+                serviceType.getServiceNumber(), serviceType.getArea().getVersion());
+        ServiceFilter sf = new ServiceFilter(new Identifier("*"), domain,
+                new Identifier("*"), null, new Identifier("*"), serviceKey, new UShortList());
 
         try {
             final ProviderSummaryList actionsCD = localDirectoryService.lookupProvider(sf, null);
@@ -174,10 +173,9 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
         // ---------------------
         serviceType = ArchiveSyncHelper.ARCHIVESYNC_SERVICE;
         serviceKey = new ServiceKey(serviceType.getArea().getNumber(),
-                serviceType.getNumber(), serviceType.getArea().getVersion());
-        sf = new ServiceFilter(new Identifier("*"),
-                domain, new Identifier("*"), null, new Identifier("*"),
-                serviceKey, new UIntegerList());
+                serviceType.getServiceNumber(), serviceType.getArea().getVersion());
+        sf = new ServiceFilter(new Identifier("*"), domain, new Identifier("*"),
+                null, new Identifier("*"), serviceKey, new UShortList());
 
         try {
             final ProviderSummaryList archiveSyncsCD = localDirectoryService.lookupProvider(sf, null);
@@ -245,7 +243,7 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
                             comObject.getObjType(),
                             comObject.getDomain(),
                             detailsList,
-                            comObject.getObjects(),
+                            comObject.getObjectsHeterogeneousList(),
                             null
                     );
                 } catch (MALException ex) {
@@ -348,7 +346,7 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
 
         @Override
         public MALMessage sendUpdate(ObjectType objType, IdentifierList domain,
-                ArchiveDetailsList objDetails, ElementList objBodies)
+                ArchiveDetailsList objDetails, HeterogeneousList objBodies)
                 throws MALInteractionException, MALException {
             // Should never reach this because we asked for one single object, the latest!
             Logger.getLogger(GroundMOProxy.class.getName()).log(Level.WARNING,
@@ -358,7 +356,7 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
 
         @Override
         public MALMessage sendResponse(ObjectType objType, IdentifierList domain,
-                ArchiveDetailsList objDetails, ElementList objBodies)
+                ArchiveDetailsList objDetails, HeterogeneousList objBodies)
                 throws MALInteractionException, MALException {
             if (objDetails != null && !objDetails.isEmpty()) {
                 arch.setTimestamp(objDetails.get(0).getTimestamp());
@@ -370,14 +368,14 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
         }
 
         @Override
-        public MALMessage sendError(MALStandardError error) throws MALInteractionException, MALException {
+        public MALMessage sendError(MOErrorException error) throws MALInteractionException, MALException {
             Logger.getLogger(GroundMOProxy.class.getName()).log(Level.INFO, "Error! (1)");
             semaphore.release();
             return null;
         }
 
         @Override
-        public MALMessage sendUpdateError(MALStandardError error) throws MALInteractionException, MALException {
+        public MALMessage sendUpdateError(MOErrorException error) throws MALInteractionException, MALException {
             Logger.getLogger(GroundMOProxy.class.getName()).log(Level.INFO, "Error! (2)");
             semaphore.release();
             return null;

@@ -49,6 +49,7 @@
         <module>platform-service-impl</module>
         <module>nanosat-mo-supervisor</module>
         <module>ground-mo-proxy</module>
+        <module>constellation-management-tool</module>
         <module>space-file-system</module>
     </modules>
 

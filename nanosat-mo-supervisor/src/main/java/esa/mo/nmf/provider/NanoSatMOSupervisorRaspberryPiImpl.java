@@ -24,18 +24,20 @@
 package esa.mo.nmf.provider;
 
 import esa.mo.com.impl.util.COMServicesProvider;
-import esa.mo.helpertools.helpers.HelperMisc;
 import esa.mo.helpertools.misc.Const;
 import esa.mo.nmf.AppStorage;
 import esa.mo.nmf.MonitorAndControlNMFAdapter;
 import esa.mo.nmf.nanosatmosupervisor.NanoSatMOSupervisor;
 import esa.mo.nmf.nmfpackage.NMFPackagePMBackend;
 import esa.mo.platform.impl.util.PlatformServicesConsumer;
+import esa.mo.platform.impl.util.PlatformServicesProviderInterface;
 import esa.mo.platform.impl.util.PlatformServicesProviderRaspberryPi;
+import esa.mo.platform.impl.util.PlatformServicesProviderSoftSim;
 import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.ccsds.moims.mo.mal.helpertools.helpers.HelperMisc;
 import org.ccsds.moims.mo.mal.MALException;
 
 /**
@@ -47,7 +49,8 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
 
     private static final String DIR_PACKAGES = "packages";
 
-    private PlatformServicesProviderRaspberryPi platformServicesRaspberryPi;
+    //  private PlatformServicesProviderSoftSim platformServicesProviderSoftSim;
+    private PlatformServicesProviderInterface platformServicesRaspberryPi;
 
     /**
      * Main command line entry point.
@@ -57,7 +60,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
      */
     public static void main(final String args[]) throws Exception {
         NanoSatMOSupervisorRaspberryPiImpl supervisor = new NanoSatMOSupervisorRaspberryPiImpl();
-        supervisor.init(new MCRaspberryPiAdapter());
+        supervisor.init(new MCRaspberryPiAdapter(supervisor));
 
         /*
         File dir = AppStorage.getAppCacheDir();
@@ -94,12 +97,23 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
     @Override
     public void initPlatformServices(COMServicesProvider comServices) {
         try {
-            platformServicesRaspberryPi = new PlatformServicesProviderRaspberryPi();
+            // TODO: choose based on system properties
+            if (false) {
+                platformServicesRaspberryPi = new PlatformServicesProviderRaspberryPi();
+            } else {
+                platformServicesRaspberryPi = new PlatformServicesProviderSoftSim();
+            }
             platformServicesRaspberryPi.init(comServices);
+
         } catch (MALException ex) {
             Logger.getLogger(NanoSatMOSupervisorRaspberryPiImpl.class.getName()).log(
                     Level.SEVERE, "Something went wrong!", ex);
         }
+    }
+
+    @Override
+    protected void startStatusTracking() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

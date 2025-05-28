@@ -23,24 +23,23 @@
  */
 package esa.mo.nmf.provider;
 
-import esa.mo.helpertools.helpers.HelperMisc;
 import java.util.Properties;
+import org.ccsds.moims.mo.mal.helpertools.helpers.HelperMisc;
 
 /**
  *
  * @author Cesar Coelho
  */
 public class PropertiesProvider {
-    
-    
-    public static Properties getProperties(){
+
+    public static Properties getProperties() {
         Properties props = new Properties();
-        
+
         // Relative path to the apps directory location
         props.put("esa.mo.sm.impl.provider.appslauncher.FolderLocation", "apps");
         props.put(HelperMisc.PROP_WORK_DIR_STORAGE_MODE, "2");
 
         return props;
     }
-    
+
 }

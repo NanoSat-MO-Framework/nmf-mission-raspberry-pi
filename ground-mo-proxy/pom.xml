@@ -49,7 +49,7 @@
         <dependency>
             <groupId>int.esa.nmf.core</groupId>
             <artifactId>generic-ground-mo-proxy</artifactId>
-            <version>1.2.0</version>
+            <version>4.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     

@@ -24,7 +24,9 @@
 package esa.mo.platform.impl.provider.raspberrypi;
 
 import esa.mo.platform.impl.provider.gen.GPSNMEAonlyAdapter;
+import esa.mo.platform.impl.provider.gen.PowerControlAdapterInterface;
 import java.io.IOException;
+import opssat.simulator.main.ESASimulator;
 import org.ccsds.moims.mo.platform.gps.structures.Position;
 import org.ccsds.moims.mo.platform.gps.structures.SatelliteInfoList;
 
@@ -36,7 +38,16 @@ import org.ccsds.moims.mo.platform.gps.structures.SatelliteInfoList;
  */
 public class GPSSoftSimAdapter extends GPSNMEAonlyAdapter {
 
+    private ESASimulator instrumentsSimulator = null;
+    private PowerControlAdapterInterface pcAdapter = null;
+
     public GPSSoftSimAdapter() {
+
+    }
+
+    public GPSSoftSimAdapter(ESASimulator instrumentsSimulator, PowerControlAdapterInterface pcAdapter) {
+        this.instrumentsSimulator = instrumentsSimulator;
+        this.pcAdapter = pcAdapter;
     }
 
     @Override
@@ -57,5 +68,10 @@ public class GPSSoftSimAdapter extends GPSNMEAonlyAdapter {
     @Override
     public SatelliteInfoList getSatelliteInfoList() {
         return null;
+    }
+
+    public TLE getTLE() {
+        TLE tle = this.instrumentsSimulator.getSimulatorNode().getTLE();
+        return tle;
     }
 }

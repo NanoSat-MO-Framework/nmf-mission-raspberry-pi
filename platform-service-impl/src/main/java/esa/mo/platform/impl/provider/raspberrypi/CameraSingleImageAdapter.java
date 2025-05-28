@@ -23,7 +23,6 @@
  */
 package esa.mo.platform.impl.provider.raspberrypi;
 
-import esa.mo.helpertools.helpers.HelperTime;
 import esa.mo.platform.impl.provider.gen.CameraAdapterInterface;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,6 +33,7 @@ import java.util.logging.Logger;
 import org.ccsds.moims.mo.mal.MALException;
 import org.ccsds.moims.mo.mal.structures.Blob;
 import org.ccsds.moims.mo.mal.structures.Duration;
+import org.ccsds.moims.mo.mal.structures.Time;
 import org.ccsds.moims.mo.mal.structures.UInteger;
 import org.ccsds.moims.mo.platform.camera.structures.CameraSettings;
 import org.ccsds.moims.mo.platform.camera.structures.Picture;
@@ -78,15 +78,12 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
     @Override
     public Picture takePicture(CameraSettings settings) throws IOException {
         // Eiffel Tower (example)
-        Picture picture = new Picture();
-        picture.setTimestamp(HelperTime.getTimestampMillis());
-        picture.setSettings(settings);
-
+        Blob content = null;
         try {
             String fileName = "picture_demo.jpg";
             ClassLoader classLoader = getClass().getClassLoader();
             InputStream in = classLoader.getResourceAsStream(fileName);
-            
+
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             byte[] buf = new byte[1024];
             int n = 0;
@@ -96,8 +93,7 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
             out.close();
             in.close();
             byte[] response = out.toByteArray();
-            
-            picture.setContent(new Blob(response));
+            content = new Blob(response);
         } catch (java.net.UnknownHostException ex) {
             Logger.getLogger(CameraSingleImageAdapter.class.getName()).log(
                     Level.SEVERE, "Maybe there is no internet?", ex);
@@ -110,7 +106,7 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
                     Level.SEVERE, null, ex);
         }
 
-        return picture;
+        return new Picture(Time.now(), settings, content);
     }
 
     @Override
@@ -135,6 +131,12 @@ public class CameraSingleImageAdapter implements CameraAdapterInterface {
     @Override
     public Picture takeAutoExposedPicture(CameraSettings settings) throws IOException, MALException {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean hasFixedResolutions() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

@@ -23,7 +23,6 @@
  */
 package esa.mo.nmf.provider;
 
-import esa.mo.helpertools.helpers.HelperAttributes;
 import esa.mo.nmf.MCRegistration;
 import esa.mo.nmf.MonitorAndControlNMFAdapter;
 import esa.mo.helpertools.misc.ShellCommander;
@@ -31,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.ccsds.moims.mo.mal.helpertools.helpers.HelperAttributes;
 import org.ccsds.moims.mo.mal.provider.MALInteraction;
 import org.ccsds.moims.mo.mal.structures.Attribute;
 import org.ccsds.moims.mo.mal.structures.Duration;
@@ -54,8 +54,6 @@ import org.ccsds.moims.mo.mc.structures.ConditionalConversionList;
 
 /**
  * The Monitor and Control Adapter for the NanoSat MO Supervisor.
- *
- * @author cbwhi
  */
 public class MCRaspberryPiAdapter extends MonitorAndControlNMFAdapter {
 
@@ -74,9 +72,20 @@ public class MCRaspberryPiAdapter extends MonitorAndControlNMFAdapter {
     private static final String ACTION_REBOOT = "System.Reboot";
     private static final String ACTION_CLOCK_SET_TIME = "System.SetTimeUsingDeltaMilliseconds";
 
+    private static final String PARAMETER_GEOFENCE = "App.Geofence";
+    private Geofence geofence;
+
     private static final String ACTION_NMF_RESTART = "NMF.Restart";
-    
+
     private final ShellCommander shellCommander = new ShellCommander();
+
+    public MCRaspberryPiAdapter(NanoSatMOSupervisorRaspberryPiImpl supervisor) {
+        try {
+            this.geofence = new Geofence(supervisor);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Could not get MC Services from Supervisor!", ex);
+        }
+    }
 
     @Override
     public void initialRegistrations(MCRegistration registration) {
@@ -108,8 +117,20 @@ public class MCRaspberryPiAdapter extends MonitorAndControlNMFAdapter {
         ));
         paramIdentifiers.add(new Identifier(PARAMETER_LINUX_VERSION));
 
+        defs.add(new ParameterDefinitionDetails(
+                "App Geofence data",
+                Union.STRING_SHORT_FORM.byteValue(),
+                "",
+                false,
+                new Duration(10),
+                null,
+                null
+        ));
+        paramIdentifiers.add(new Identifier(PARAMETER_GEOFENCE));
+
         registration.registerParameters(paramIdentifiers, defs);
 
+        // ------------------ Actions ------------------
         ActionDefinitionDetailsList actionDefs = new ActionDefinitionDetailsList();
         IdentifierList actionIdentifiers = new IdentifierList();
 
@@ -176,12 +197,65 @@ public class MCRaspberryPiAdapter extends MonitorAndControlNMFAdapter {
         } else if (PARAMETER_LINUX_VERSION.equals(identifier.getValue())) {
             String msg = shellCommander.runCommandAndGetOutputMessage(CMD_LINUX_VERSION);
             return (Attribute) HelperAttributes.javaType2Attribute(msg);
+        } else if (PARAMETER_GEOFENCE.equals(identifier.getValue())) {
+            String msg = this.geofence.toString();
+            return (Attribute) HelperAttributes.javaType2Attribute(msg);
         }
         return null;
     }
 
     @Override
     public Boolean onSetValue(IdentifierList identifiers, ParameterRawValueList values) {
+
+        try {
+
+            identifiers.forEach(identifier -> {
+                if (PARAMETER_GEOFENCE.equals(identifier.getValue())) {
+                    try {
+
+                        // Format:  Action (ADD, REMOVE, REMOVEAPP, REMOVEALL)
+                        //          App name
+                        //          Lon,Lat
+                        //          range in km
+                        //          startWhenInsideRange
+                        // Example: ADD:app1:40.123456:50.123456:100.5:true
+                        //          ADD:app2:44.123456:55.123456:99.5:false
+                        //          REMOVE:app1:40.123456:50.123456:100.5:true
+                        //          REMOVEAPP:app1
+                        //          REMOVEALL
+                        String rawValueString = values.get(0).getRawValue().toString();
+
+                        String[] geofenceData = rawValueString.split(":");
+                        switch (geofenceData[0]) {
+                            case "ADD":
+                                LOGGER.log(Level.INFO, "Add new Geofence... ");
+                                geofence.add(geofenceData);
+                                break;
+                            case "REMOVE":
+                                LOGGER.log(Level.INFO, "Remove Geofence... ");
+                                geofence.remove(geofenceData);
+                                break;
+                            case "REMOVEAPP":
+                                LOGGER.log(Level.INFO, "Remove Geofence for App " + geofenceData[1] + "...");
+                                geofence.removeApp(geofenceData);
+                                break;
+                            case "REMOVEALL":
+                                LOGGER.log(Level.INFO, "Remove all Geofences... ");
+                                geofence.removeAll();
+                                break;
+                            default:
+                                break;
+                        }
+                    } catch (Exception ex) {
+                        LOGGER.log(Level.SEVERE, "Error when setting value: " + ex);
+                    }
+                }
+            });
+
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Error when setting value: " + ex.getMessage());
+        }
+
         return false;  // to confirm that no variable was set
     }
 

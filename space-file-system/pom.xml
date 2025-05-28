@@ -44,7 +44,7 @@
     </developers>
 
     <properties>
-        <esa.nmf.version>2.1.0-SNAPSHOT</esa.nmf.version>
+        <esa.nmf.version>4.0-SNAPSHOT</esa.nmf.version>
         <out.folder.output>space-file-system</out.folder.output>
         <out.folder.nmf>nanosat-mo-framework</out.folder.nmf>
         <mission.outputdir>${project.build.directory}/${out.folder.output}</mission.outputdir>
@@ -55,6 +55,11 @@
         <dependency>
             <groupId>int.esa.nmf.core</groupId>
             <artifactId>nanosat-mo-connector</artifactId>
+            <version>${esa.nmf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>int.esa.nmf.mission.simulator.moservices.impl</groupId>
+            <artifactId>nmf-platform-impl-sim</artifactId>
             <version>${esa.nmf.version}</version>
         </dependency>
         <!-- We need this to run the supervisor: -->
@@ -139,7 +144,7 @@
             </plugin>
             
             <!--   This deploys the generated Space File System   -->
-            <!--   on a remote machine (example: a FlatSat)       -->
+            <!--   on a remote machine (example: a FlatSat)      
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>wagon-maven-plugin</artifactId>
@@ -159,7 +164,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>            
+            </plugin>            -->
         </plugins>
     </build>
 </project>

@@ -30,11 +30,10 @@ import java.util.Properties;
  * @author Cesar Coelho
  */
 public class PropertiesTransport {
-    
-    
-    public static Properties getProperties(){
+
+    public static Properties getProperties() {
         Properties props = new Properties();
-        
+
         //The following sets the default protocol used
         props.put("org.ccsds.moims.mo.mal.transport.default.protocol", "maltcp://");
         // props.put("org.ccsds.moims.mo.mal.transport.default.protocol", "malhttp://");
@@ -42,18 +41,16 @@ public class PropertiesTransport {
 
         //The following sets the secondary protocol used
         // props.put("org.ccsds.moims.mo.mal.transport.secondary.protocol", "rmi://");
-
         // TCP-IP
         props.put("org.ccsds.moims.mo.mal.transport.protocol.maltcp", "esa.mo.mal.transport.tcpip.TCPIPTransportFactoryImpl");
         props.put("org.ccsds.moims.mo.mal.encoding.protocol.maltcp", "esa.mo.mal.encoder.binary.fixed.FixedBinaryStreamFactory");
         // props.put("org.ccsds.moims.mo.mal.encoding.protocol.maltcp", "esa.mo.mal.encoder.binary.split.SplitBinaryStreamFactory");
         props.put("org.ccsds.moims.mo.mal.transport.tcpip.autohost", "true");
-        
+
         //props.put("org.ccsds.moims.mo.mal.transport.tcpip.host", "xxx.xxx.xxx.xxx");
         //props.put("org.ccsds.moims.mo.mal.transport.tcpip.port", "54321");
         //props.put("org.ccsds.moims.mo.mal.transport.tcpip.isServer", "true");
-
         return props;
     }
-    
+
 }
