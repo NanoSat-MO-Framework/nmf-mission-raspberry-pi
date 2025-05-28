@@ -50,7 +50,9 @@ RUN apk update && apk add sudo bash
 
 # copy files from previous build and install the NMF Supervisor
 COPY --from=nmfRpiMissionBuilder /nmf/space-file-system/target/space-file-system/nanosat-mo-framework/ /nanosat-mo-framework/
-RUN chmod +x fresh_install.sh && ./fresh_install.sh
+RUN apk add --no-cache sudo
+
+RUN chmod +x fresh_install_busybox.sh && ./fresh_install_busybox.sh
 
 # copy apps
 COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/edge-ai/target/*.nmfpack /nanosat-mo-framework/packages
@@ -64,4 +66,4 @@ COPY --from=nmfMainBuilder /nmf/nanosat-mo-framework/sdk/examples/space/publish-
 COPY ./space-file-system/src/main/resources/orbital-dynamics-configuration/* ./
 
 # configure orbital dynamics and start NMF Supervisor
-CMD /nanosat-mo-framework/configure_orbital_dynamics.sh && /nanosat-mo-framework/start_supervisor.sh
+CMD /nanosat-mo-framework/configure_orbital_dynamics.sh && su nmf-admin -c /nanosat-mo-framework/start_supervisor.sh

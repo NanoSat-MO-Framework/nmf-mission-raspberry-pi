@@ -29,7 +29,7 @@ import java.io.IOException;
 import opssat.simulator.main.ESASimulator;
 import org.ccsds.moims.mo.platform.gps.structures.Position;
 import org.ccsds.moims.mo.platform.gps.structures.SatelliteInfoList;
-import org.orekit.propagation.analytical.tle.TLE;
+
 
 /**
  * A simple GPS Adapter for testing purposes.

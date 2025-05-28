@@ -17,7 +17,7 @@ The installation of the NMF on a Raspberry Pi provides a cheap testbed environme
 
 **Note: This guide was created using a Raspberry Pi 3B with 1 GB of RAM and Raspbian 10 (Buster) OS.**
 
-1. By default, the root password is disabled on the Raspberry Pi. Set a root password: ```sudo passwd ```
+1. By default, the root password is disabled on the Raspberry Pi. Set a root password: ```sudo passwd```
 
 2. Enable SSH on the Raspberry Pi: ```sudo raspi-config```  (Interface Options -> SSH)
 
@@ -25,11 +25,15 @@ The installation of the NMF on a Raspberry Pi provides a cheap testbed environme
 	- Edit the **/etc/ssh/sshd_config** file: ```sudo nano /etc/ssh/sshd_config ```
 	- Replace the line: **#PermitRootLogin prohibit-password** with **PermitRootLogin yes**
 	- Save and exit (CTRL+O, CTRL+X)
-	- Restart SSH: ```sudo service ssh restart ```
+	- Restart SSH: ```sudo service ssh restart```
 
 # Building the project
 
 1. Follow the Readme instructions on the [NanoSat MO Framework](https://github.com/esa/nanosat-mo-framework/) project before continuing to the next steps
+
+* This mission is currently working only with the phi-sat-2 branch, that adds some dependencioes the dev branch does not provide. to switch to this branch do `git checkout phi-sat-2` in the nanosat-mo-framework directory.
+* run `mvn install` both in the project root and in the sdk folder  
+
 
 2. Clone this (nmf-mission-raspberry-pi) repository:
 ```
@@ -37,13 +41,14 @@ git clone https://github.com/NanoSat-MO-Framework/nmf-mission-raspberry-pi.git
 ```
 
 3. Go to the pom file of space-file-system project and edit the IP Address to match the Raspberry Pi machine on:
-```
+```xml
 		<configuration>
 			<fromDir>${mission.outputdir}/${out.folder.nmf}</fromDir>
 			<url>scp://root@192.168.178.33/</url>
 			<toDir>${out.folder.nmf}</toDir>
 		</configuration>
 ```
+* use `scpexe://` instead of `scp://` if you want to use your system's ssh system instead of the java ssh2 libraries. Recommended on Linux and Mac.
 
 4. Build the **nmf-mission-raspberry-pi** project:
 ```
@@ -79,16 +84,16 @@ sudo ./fresh_install.sh
 
 3. The installation should output the message: "Success! The NanoSat MO Framework was installed!". Otherwise, please read the error and fix it accordingly.
 
-4. Start the NanoSat MO Supervisor with the command: ``` sudo ./start_supervisor.sh ```
+4. Start the NanoSat MO Supervisor with the command: ```sudo ./start_supervisor.sh```
 
 # Docker
 This mission comes with a Dockerfile that allows you to deploy the NanoSat MO Framework in a Docker container. This allows for multiple NanoSat segments to be deployed on one machine, which can be useful for testing, development or simulation purposes. Use the following steps to create and start a container with the name _nmf-supervisor_:
 
 1. Clone this repository and navigate to its root directory.
-2. Build Docker image: ``` sudo docker build -t nmf/raspberry-pi . ``` 
-3. Run a Docker container: ``` sudo docker run --name nmf-supervisor nmf/raspberry-pi ```
+2. Build Docker image: ```sudo docker build -t nmf/raspberry-pi .``` 
+3. Run a Docker container: ```sudo docker run --name nmf-supervisor nmf/raspberry-pi```
 
-To access the container, find its IP address: ``` sudo docker inspect nmf-supervisor | grep IPAddress ```
+To access the container, find its IP address: ```sudo docker inspect nmf-supervisor | grep IPAddress```
 
 More information on how to use Docker can be found in the [official Docker documentation](https://docs.docker.com/).
 
