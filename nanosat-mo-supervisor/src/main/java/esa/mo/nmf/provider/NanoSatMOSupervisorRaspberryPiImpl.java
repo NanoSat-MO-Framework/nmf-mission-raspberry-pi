@@ -24,8 +24,6 @@
 package esa.mo.nmf.provider;
 
 import esa.mo.com.impl.util.COMServicesProvider;
-import esa.mo.helpertools.misc.Const;
-import esa.mo.nmf.AppStorage;
 import esa.mo.nmf.MonitorAndControlNMFAdapter;
 import esa.mo.nmf.nanosatmosupervisor.NanoSatMOSupervisor;
 import esa.mo.nmf.nmfpackage.NMFPackagePMBackend;
@@ -33,11 +31,9 @@ import esa.mo.platform.impl.util.PlatformServicesConsumer;
 import esa.mo.platform.impl.util.PlatformServicesProviderInterface;
 import esa.mo.platform.impl.util.PlatformServicesProviderRaspberryPi;
 import esa.mo.platform.impl.util.PlatformServicesProviderSoftSim;
-import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.ccsds.moims.mo.mal.helpertools.helpers.HelperMisc;
 import org.ccsds.moims.mo.mal.MALException;
 
 /**
@@ -46,8 +42,6 @@ import org.ccsds.moims.mo.mal.MALException;
  * @author Cesar Coelho
  */
 public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSupervisor {
-
-    private static final String DIR_PACKAGES = "packages";
 
     //  private PlatformServicesProviderSoftSim platformServicesProviderSoftSim;
     private PlatformServicesProviderInterface platformServicesRaspberryPi;
@@ -61,12 +55,6 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
     public static void main(final String args[]) throws Exception {
         NanoSatMOSupervisorRaspberryPiImpl supervisor = new NanoSatMOSupervisorRaspberryPiImpl();
         supervisor.init(new MCRaspberryPiAdapter(supervisor));
-
-        /*
-        File dir = AppStorage.getAppCacheDir();
-        Logger.getLogger(NanoSatMOSupervisorRaspberryPiImpl.class.getName()).log(
-                Level.INFO, "The path of the dir is: {0}", dir.getAbsolutePath());
-         */
     }
 
     @Override
@@ -81,16 +69,9 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
         systemProps.putAll(defaultprops);
         System.setProperties(systemProps);
 
-        // Directory for COM Archive:
-        System.setProperty(HelperMisc.PROP_MO_APP_NAME, Const.NANOSAT_MO_SUPERVISOR_NAME);
-        String location = AppStorage.getAppNMFInternalDir() + File.separator + "comArchive.db";
-        String url = "jdbc:sqlite:" + location;
-        systemProps.put("esa.nmf.archive.persistence.jdbc.url", url);
-        System.setProperties(systemProps);
-
         super.init(mcAdapter,
                 new PlatformServicesConsumer(),
-                new NMFPackagePMBackend(DIR_PACKAGES)
+                null
         );
     }
 
