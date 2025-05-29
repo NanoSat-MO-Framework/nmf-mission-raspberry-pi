@@ -6,7 +6,7 @@
   
     <groupId>int.esa.nmf.mission.raspberrypi</groupId>
     <artifactId>nanosat-mo-supervisor-raspberrypi</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>NMF Mission Raspberry Pi - NanoSat MO Supervisor</name>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>int.esa.nmf.mission.raspberrypi</groupId>
             <artifactId>nmf-platform-impl-raspberrypi</artifactId>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>int.esa.nmf.mission.simulator.moservices.impl</groupId>
