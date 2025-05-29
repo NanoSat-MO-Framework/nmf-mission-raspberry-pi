@@ -41,7 +41,7 @@ RUN mvn install
 
 
 
-FROM adoptopenjdk/openjdk8:alpine-jre AS nmfRpiMissionRunner
+FROM adoptopenjdk/openjdk11:alpine-jre AS nmfRpiMissionRunner
 
 WORKDIR /nanosat-mo-framework/
 
