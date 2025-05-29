@@ -98,7 +98,7 @@ public final class NanoSatMOSupervisorRaspberryPiImpl extends NanoSatMOSuperviso
     public void initPlatformServices(COMServicesProvider comServices) {
         try {
             // TODO: choose based on system properties
-            if (false) {
+            if (true) {
                 platformServicesRaspberryPi = new PlatformServicesProviderRaspberryPi();
             } else {
                 platformServicesRaspberryPi = new PlatformServicesProviderSoftSim();
