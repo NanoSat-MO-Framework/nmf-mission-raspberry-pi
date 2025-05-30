@@ -133,6 +133,7 @@ public class NanoSat {
      * @throws IOException
      */
     public String getDirectoryServiceURIString() throws IOException {
+        Logger.getLogger(NanoSat.class.getName()).log(Level.INFO, "The IP Adress is: {0}", this.getIPAddress());
         return ("maltcp://" + this.getIPAddress() + ":1024/nanosat-mo-supervisor-Directory");
     }
 
