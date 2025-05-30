@@ -45,7 +45,7 @@ import org.ccsds.moims.mo.softwaremanagement.packagemanagement.consumer.PackageM
 public class PackageManagerGround {
 
     private static final Logger LOGGER = Logger.getLogger(PackageManagerGround.class.getName());
-    private static PackageManagementConsumerServiceImpl serviceSMPackageManagement;
+    private final PackageManagementConsumerServiceImpl serviceSMPackageManagement;
     private final GroundMOAdapterImpl groundMOAdapter;
 
     public PackageManagerGround(GroundMOAdapterImpl groundMOAdapter) {

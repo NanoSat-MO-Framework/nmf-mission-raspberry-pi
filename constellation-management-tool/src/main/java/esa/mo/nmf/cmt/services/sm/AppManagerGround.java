@@ -45,7 +45,6 @@ import org.ccsds.moims.mo.softwaremanagement.appslauncher.consumer.AppsLauncherA
 public class AppManagerGround {
 
     private static final Logger LOGGER = Logger.getLogger(AppManagerGround.class.getName());
-
     private final AppsLauncherConsumerServiceImpl serviceSMAppsLauncher;
     private final GroundMOAdapterImpl groundMOAdapter;
 
