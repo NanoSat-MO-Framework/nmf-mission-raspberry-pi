@@ -109,7 +109,6 @@ public class ConstellationManagerGui extends JFrame {
         btnPackageManager.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
                 final ArrayList<NanoSat> selectedNanoSatSegments = new ArrayList<NanoSat>();
 
                 for (int i = 0; i < tblNanoSatSegments.getRowCount(); i++) {

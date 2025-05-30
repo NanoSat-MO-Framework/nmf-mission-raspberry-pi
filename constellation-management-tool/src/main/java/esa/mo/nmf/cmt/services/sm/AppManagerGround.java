@@ -46,15 +46,20 @@ public class AppManagerGround {
 
     private static final Logger LOGGER = Logger.getLogger(AppManagerGround.class.getName());
 
+    private final AppsLauncherConsumerServiceImpl serviceSMAppsLauncher;
+    private final GroundMOAdapterImpl groundMOAdapter;
+
+    public AppManagerGround(GroundMOAdapterImpl groundMOAdapter) {
+        this.groundMOAdapter = groundMOAdapter;
+        this.serviceSMAppsLauncher = groundMOAdapter.getSMServices().getAppsLauncherService();
+    }
+
     /**
      * Launches an App on a NanoSat Segment
      *
-     * @param groundMOAdapter Ground MO Adapter implementation
      * @return The list of ArchivePersistenceObjects.
      */
-    public static List<ArchivePersistenceObject> getApps(GroundMOAdapterImpl groundMOAdapter) {
-        final AppsLauncherConsumerServiceImpl serviceSMAppsLauncher = groundMOAdapter.getSMServices().getAppsLauncherService();
-
+    public List<ArchivePersistenceObject> getApps() {
         IdentifierList idList = new IdentifierList();
         idList.add(new Identifier("*"));
 
@@ -75,12 +80,9 @@ public class AppManagerGround {
     /**
      * Runs an App.
      *
-     * @param groundMOAdapter Ground MO Adapter implementation
      * @param appId ID of the App to run
      */
-    public static void runAppById(GroundMOAdapterImpl groundMOAdapter, Long appId) {
-        final AppsLauncherConsumerServiceImpl serviceSMAppsLauncher = groundMOAdapter.getSMServices().getAppsLauncherService();
-
+    public void runAppById(Long appId) {
         LongList ids = new LongList();
         ids.add(appId);
 
@@ -91,9 +93,7 @@ public class AppManagerGround {
         }
     }
 
-    public static void stopAppById(GroundMOAdapterImpl groundMOAdapter, Long appId) {
-        final AppsLauncherConsumerServiceImpl serviceSMAppsLauncher = groundMOAdapter.getSMServices().getAppsLauncherService();
-
+    public void stopAppById(Long appId) {
         LongList ids = new LongList();
         ids.add(appId);
 

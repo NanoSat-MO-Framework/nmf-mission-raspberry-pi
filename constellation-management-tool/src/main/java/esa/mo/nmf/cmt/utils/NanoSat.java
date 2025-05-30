@@ -47,11 +47,13 @@ import org.ccsds.moims.mo.softwaremanagement.packagemanagement.body.FindPackageR
 
 public class NanoSat {
 
+    protected HashMap<String, Long> installedApps = new HashMap<>();
     protected String name;
     protected String ipAddress = null;
     protected ProviderSummaryList providers;
     protected GroundMOAdapterImpl groundAdapter;
-    protected HashMap<String, Long> installedApps = new HashMap<>();
+    private AppManagerGround appsManager;
+    private PackageManagerGround packageManager;
 
     // set active = false when segment is removed from constellation.
     // needed to avoid naming issues when adding new segments to the
@@ -145,7 +147,7 @@ public class NanoSat {
     /**
      * Connect to the service providers on the NanoSat Segment
      */
-    public void connectToProviders() {
+    public void connectToNanoSat() {
         try {
             this.providers = GroundMOAdapterImpl.retrieveProvidersFromDirectory(this.getDirectoryServiceURI());
 
@@ -153,6 +155,8 @@ public class NanoSat {
                 // Connect to provider on index 0
                 this.groundAdapter = new GroundMOAdapterImpl(this.providers.get(0));
                 this.groundAdapter.addDataReceivedListener(new NanoSat.CompleteDataReceivedAdapter(this.getName()));
+                appsManager = new AppManagerGround(groundAdapter);
+                packageManager = new PackageManagerGround(groundAdapter);
             } else {
                 Logger.getLogger(NanoSat.class.getName()).log(Level.SEVERE,
                         "{0}: the returned list of providers is empty!", new Object[]{this.name});
@@ -168,7 +172,7 @@ public class NanoSat {
      * @param packageName NMF package name
      */
     public void installPackage(String packageName) {
-        PackageManagerGround.installPackage(this.groundAdapter, packageName);
+        packageManager.installPackage(packageName);
     }
 
     /**
@@ -177,7 +181,7 @@ public class NanoSat {
      * @param packageName NMF package name
      */
     public void uninstallPackage(String packageName) {
-        PackageManagerGround.uninstallPackage(this.groundAdapter, packageName);
+        packageManager.uninstallPackage(packageName);
     }
 
     /**
@@ -186,7 +190,7 @@ public class NanoSat {
      * @param packageName NMF package name
      */
     public void upgradePackage(String packageName) {
-        PackageManagerGround.upgradePackage(this.groundAdapter, packageName);
+        packageManager.upgradePackage(packageName);
     }
 
     /**
@@ -201,7 +205,7 @@ public class NanoSat {
                     new Object[]{appName, this.name});
             return;
         }
-        AppManagerGround.runAppById(this.groundAdapter, installedApps.get(appName));
+        appsManager.runAppById(installedApps.get(appName));
     }
 
     /**
@@ -216,7 +220,7 @@ public class NanoSat {
                     new Object[]{appName, this.name});
             return;
         }
-        AppManagerGround.stopAppById(this.groundAdapter, installedApps.get(appName));
+        appsManager.stopAppById(installedApps.get(appName));
     }
 
     /**
@@ -227,7 +231,7 @@ public class NanoSat {
      * @return list with installed Apps
      */
     public List<ArchivePersistenceObject> getAllApps() {
-        List<ArchivePersistenceObject> apps = AppManagerGround.getApps(this.groundAdapter);
+        List<ArchivePersistenceObject> apps = appsManager.getApps();
 
         if (apps != null) {
             for (ArchivePersistenceObject app : apps) {
@@ -249,7 +253,7 @@ public class NanoSat {
      * installation status
      */
     public FindPackageResponse getAllPackages() {
-        return PackageManagerGround.getAllPackages(this.groundAdapter);
+        return packageManager.getAllPackages();
     }
 
     /**

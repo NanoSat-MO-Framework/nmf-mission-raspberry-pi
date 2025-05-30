@@ -95,7 +95,7 @@ public class ConstellationManagementTool {
      * @param name the name to check for uniqueness
      * @return true: name is unique, false: name already exists
      */
-    public boolean isNaNoSatSegmentNameUnique(String name) {
+    public boolean isNanoSatSegmentNameUnique(String name) {
         return (getNanoSatSegmentByName(name) == null);
     }
 
@@ -190,7 +190,7 @@ public class ConstellationManagementTool {
                 String ipAddress = segment.getValue();
 
                 NanoSat nanoSat = new NanoSat(name, ipAddress);
-                nanoSat.connectToProviders();
+                nanoSat.connectToNanoSat();
                 this.constellation.add(nanoSat);
             }
 
@@ -216,7 +216,7 @@ public class ConstellationManagementTool {
      * segments.
      */
     public void connectToConstellationProviders() {
-        // this.constellation.forEach(NanoSat::connectToProviders);
+        //this.constellation.forEach(NanoSat::connectToProviders);
     }
 
     /**

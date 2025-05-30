@@ -46,16 +46,20 @@ public class PackageManagerGround {
 
     private static final Logger LOGGER = Logger.getLogger(PackageManagerGround.class.getName());
     private static PackageManagementConsumerServiceImpl serviceSMPackageManagement;
+    private final GroundMOAdapterImpl groundMOAdapter;
+    
+    public PackageManagerGround(GroundMOAdapterImpl groundMOAdapter) {
+        this.groundMOAdapter = groundMOAdapter;
+        serviceSMPackageManagement = groundMOAdapter.getSMServices().getPackageManagementService();
+    }
 
     /**
      * Get all NMF packages that are avaibalbe on the NanoSat Segment
      *
-     * @param groundMOAdapter ground MO adapter implementation
      * @return FindPackageResponse: provides the package name and its
      * installation status
      */
-    public static FindPackageResponse getAllPackages(GroundMOAdapterImpl groundMOAdapter) {
-        serviceSMPackageManagement = groundMOAdapter.getSMServices().getPackageManagementService();
+    public FindPackageResponse getAllPackages() {
         IdentifierList idList = new IdentifierList();
         idList.add(new Identifier("*"));
 
@@ -70,11 +74,9 @@ public class PackageManagerGround {
     /**
      * Install the given NMF package on the NanoSat Segment
      *
-     * @param groundMOAdapter The Ground MO Adapter.
      * @param packageName NMF package name.
      */
-    public static void installPackage(GroundMOAdapterImpl groundMOAdapter, String packageName) {
-        serviceSMPackageManagement = groundMOAdapter.getSMServices().getPackageManagementService();
+    public void installPackage(String packageName) {
         IdentifierList ids = new IdentifierList();
         ids.add(new Identifier(packageName));
 
@@ -117,8 +119,7 @@ public class PackageManagerGround {
      *
      * @param packageName NMF package name
      */
-    public static void upgradePackage(GroundMOAdapterImpl groundMOAdapter, String packageName) {
-        serviceSMPackageManagement = groundMOAdapter.getSMServices().getPackageManagementService();
+    public void upgradePackage(String packageName) {
         IdentifierList ids = new IdentifierList();
         ids.add(new Identifier(packageName));
 
@@ -164,9 +165,7 @@ public class PackageManagerGround {
      *
      * @param packageName NMF package name
      */
-    public static void uninstallPackage(GroundMOAdapterImpl groundMOAdapter, String packageName) {
-        serviceSMPackageManagement = groundMOAdapter.getSMServices().getPackageManagementService();
-
+    public void uninstallPackage(String packageName) {
         IdentifierList ids = new IdentifierList();
         ids.add(new Identifier(packageName));
 

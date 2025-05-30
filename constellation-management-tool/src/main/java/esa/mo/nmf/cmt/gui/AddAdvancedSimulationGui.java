@@ -71,7 +71,7 @@ public class AddAdvancedSimulationGui extends JFrame {
                     // comment or blank - ignore this line
                 } else {
                     String[] values = line.split(";");
-                    if (nanoSatConfigurations.get(values[0]) != null || !this.cmt.isNaNoSatSegmentNameUnique(values[0])) {
+                    if (nanoSatConfigurations.get(values[0]) != null || !this.cmt.isNanoSatSegmentNameUnique(values[0])) {
                         throw new IllegalArgumentException("Duplicated NanoSat Segment! Names must be unique.");
                     } else {
                         nanoSatConfigurations.put(values[0], new String[]{values[1], values[2], values[3], values[4], values[5], values[6]});

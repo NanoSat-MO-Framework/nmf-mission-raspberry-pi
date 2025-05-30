@@ -97,7 +97,7 @@ public class ConnectNanoSatGui extends JFrame {
                     // comment or blank - ignore this line
                 } else {
                     String[] values = line.split(";");
-                    if (nanoSatSegments.get(values[0]) != null || !this.cmt.isNaNoSatSegmentNameUnique(values[0])) {
+                    if (nanoSatSegments.get(values[0]) != null || !this.cmt.isNanoSatSegmentNameUnique(values[0])) {
                         throw new IllegalArgumentException("Duplicated NanoSat Segment! Names must be unique.");
                     } else {
                         nanoSatSegments.put(values[0], values[1]);
