@@ -24,11 +24,11 @@ package esa.mo.nmf.cmt.utils;
 
 public class NmfAppModel {
 
-    final String name;
-    final String description;
-    final String category;
-    int running;
-    int installationCounter;
+    private final String name;
+    private final String description;
+    private final String category;
+    private int running;
+    private int installationCounter;
 
     public NmfAppModel(String name, String description, String category, boolean running) {
         this.name = name;

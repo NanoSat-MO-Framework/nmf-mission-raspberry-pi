@@ -216,7 +216,7 @@ public class ConstellationManagementTool {
      * segments.
      */
     public void connectToConstellationProviders() {
-        //this.constellation.forEach(NanoSat::connectToProviders);
+        this.constellation.forEach(NanoSat::connectToNanoSat);
     }
 
     /**
