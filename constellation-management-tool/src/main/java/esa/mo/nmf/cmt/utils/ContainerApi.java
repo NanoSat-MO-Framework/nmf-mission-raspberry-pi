@@ -6,7 +6,7 @@ import java.io.IOException;
  * This abstract class is used to provide multiple APIs for simulating the
  * NanoSat segments. Implement this class to create a new API.
  */
-public abstract class SimulatorApi {
+public abstract class ContainerApi {
 
     public abstract void run(String name, String[] keplerElements) throws IOException;
 

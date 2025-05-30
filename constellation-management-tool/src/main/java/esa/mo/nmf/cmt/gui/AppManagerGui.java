@@ -7,8 +7,6 @@ import esa.mo.com.impl.provider.ArchivePersistenceObject;
 import esa.mo.nmf.cmt.ConstellationManagementTool;
 import esa.mo.nmf.cmt.utils.NanoSat;
 import esa.mo.nmf.cmt.utils.NmfAppModel;
-import org.ccsds.moims.mo.softwaremanagement.appslauncher.structures.AppDetails;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.ccsds.moims.mo.softwaremanagement.appslauncher.structures.AppDetails;
 
 public class AppManagerGui extends JFrame {
     private static final Logger LOGGER = Logger.getLogger(ConstellationManagementTool.class.getName());
@@ -42,7 +41,6 @@ public class AppManagerGui extends JFrame {
      * This Class manages the Apps that are available on the selected NanoSats.
      */
     public AppManagerGui(ConstellationManagementTool cmt, ArrayList<NanoSat> selectedNanoSatSegments) {
-
         this.cmt = cmt;
         this.cmt.connectToConstellationProviders();
         this.selectedNanoSatSegments = selectedNanoSatSegments;
@@ -190,7 +188,11 @@ public class AppManagerGui extends JFrame {
                         NmfAppModel appObject;
 
                         if (appMap.get(appDetails.getName().toString()) == null) {
-                            appObject = new NmfAppModel(appDetails.getName().toString(), appDetails.getDescription(), appDetails.getCategory().toString(), appDetails.getRunning());
+                            appObject = new NmfAppModel(
+                                    appDetails.getName().toString(),
+                                    appDetails.getDescription(),
+                                    appDetails.getCategory().toString(),
+                                    appDetails.getRunning());
                         } else {
                             appObject = appMap.get(appDetails.getName().toString());
                             if (appDetails.getRunning()) {
@@ -206,7 +208,12 @@ public class AppManagerGui extends JFrame {
 
             for (Map.Entry<String, NmfAppModel> appEntry : appMap.entrySet()) {
                 NmfAppModel app = appEntry.getValue();
-                this.tableModel.addRow(new Object[]{app.getName(), app.getDescription(), app.getCategory(), app.getRunningCounter()});
+                this.tableModel.addRow(new Object[]{
+                    app.getName(),
+                    app.getDescription(),
+                    app.getCategory(),
+                    app.getRunningCounter()
+                });
             }
 
         } catch (Exception ex) {

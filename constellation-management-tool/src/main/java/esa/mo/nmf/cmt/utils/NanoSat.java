@@ -149,7 +149,9 @@ public class NanoSat {
      */
     public void connectToNanoSat() {
         try {
-            this.providers = GroundMOAdapterImpl.retrieveProvidersFromDirectory(this.getDirectoryServiceURI());
+            URI uri = this.getDirectoryServiceURI();
+            Logger.getLogger(NanoSat.class.getName()).log(Level.INFO, "Connecting to: {0}", uri.getValue());
+            this.providers = GroundMOAdapterImpl.retrieveProvidersFromDirectory(uri);
 
             if (!providers.isEmpty()) {
                 // Connect to provider on index 0

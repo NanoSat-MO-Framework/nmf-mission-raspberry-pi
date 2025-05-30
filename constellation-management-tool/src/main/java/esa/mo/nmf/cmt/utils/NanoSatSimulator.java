@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  */
 public class NanoSatSimulator extends NanoSat {
 
-    private SimulatorApi simulatorApi;
+    private ContainerApi simulatorApi;
     private String[] keplerElements = null;
 
     /**

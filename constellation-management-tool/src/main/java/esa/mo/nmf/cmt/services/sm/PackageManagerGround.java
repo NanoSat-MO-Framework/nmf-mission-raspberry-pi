@@ -47,7 +47,7 @@ public class PackageManagerGround {
     private static final Logger LOGGER = Logger.getLogger(PackageManagerGround.class.getName());
     private static PackageManagementConsumerServiceImpl serviceSMPackageManagement;
     private final GroundMOAdapterImpl groundMOAdapter;
-    
+
     public PackageManagerGround(GroundMOAdapterImpl groundMOAdapter) {
         this.groundMOAdapter = groundMOAdapter;
         serviceSMPackageManagement = groundMOAdapter.getSMServices().getPackageManagementService();
@@ -81,17 +81,17 @@ public class PackageManagerGround {
         ids.add(new Identifier(packageName));
 
         try {
-            serviceSMPackageManagement.getPackageManagementStub().install(ids, new PackageManagementAdapter() {
+            serviceSMPackageManagement.getPackageManagementStub().asyncInstall(ids, new PackageManagementAdapter() {
 
                 @Override
                 public void installAckReceived(MALMessageHeader msgHeader,
                         BooleanList integrity, java.util.Map qosProperties) {
-                    LOGGER.log(Level.INFO, "Installing...");
+                    LOGGER.log(Level.INFO, "Installing  on satellite: {0}", msgHeader.getFrom());
                 }
 
                 @Override
                 public void installResponseReceived(MALMessageHeader msgHeader, java.util.Map qosProperties) {
-                    LOGGER.log(Level.INFO, "Installed successfully!");
+                    LOGGER.log(Level.INFO, "Installed successfully on satellite: {0}", msgHeader.getFrom());
                 }
 
                 @Override

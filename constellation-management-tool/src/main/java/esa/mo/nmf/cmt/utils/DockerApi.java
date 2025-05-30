@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 /**
  * This class implements the Docker API for simulating NanoSat segments.
  */
-public class DockerApi extends SimulatorApi {
+public class DockerApi extends ContainerApi {
 
     private final String image;
 

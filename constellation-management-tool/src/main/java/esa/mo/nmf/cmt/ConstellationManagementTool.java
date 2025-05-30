@@ -105,7 +105,6 @@ public class ConstellationManagementTool {
     public void removeAllSimulations() {
         this.constellation.forEach(nanoSat -> {
             if (nanoSat.isActive()) {
-
                 Logger.getLogger(ConstellationManagementTool.class.getName()).log(
                         Level.INFO, "Removing node {0}...", new Object[]{nanoSat.getName()});
                 nanoSat.deleteIfSimulation();
@@ -123,7 +122,7 @@ public class ConstellationManagementTool {
      */
     public void addBasicSimulations(String name, int size) throws IOException {
         try {
-            for (int i = 1; i <= size; i++) {
+            for (int i = 0; i < size; i++) {
                 int nodeNumber = this.constellation.size() + 1;
                 NanoSatSimulator nanoSat = new NanoSatSimulator("nmfsim-" + name + "-" + nodeNumber);
                 nanoSat.run();
