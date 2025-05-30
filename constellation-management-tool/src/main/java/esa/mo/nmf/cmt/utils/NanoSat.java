@@ -63,9 +63,11 @@ public class NanoSat {
      * segment.
      *
      * @param name NanoSat segment name
+     * @param ipAddress The IP address
      */
-    public NanoSat(String name) {
+    public NanoSat(String name, String ipAddress) {
         this.name = name;
+        this.ipAddress = ipAddress;
         this.active = true;
     }
 
@@ -114,13 +116,6 @@ public class NanoSat {
             throw new IOException("IP Address is undefined");
         }
         return this.ipAddress;
-    }
-
-    /**
-     * @param ipAddress NanoSat segment IP address
-     */
-    public void setIPAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
     }
 
     /**
@@ -232,7 +227,6 @@ public class NanoSat {
      * @return list with installed Apps
      */
     public List<ArchivePersistenceObject> getAllApps() {
-
         List<ArchivePersistenceObject> apps = AppManagerGround.getApps(this.groundAdapter);
 
         if (apps != null) {
@@ -292,7 +286,11 @@ public class NanoSat {
         public void onDataReceived(ParameterInstance parameterInstance) {
             Logger.getLogger(NanoSat.class.getName()).log(Level.INFO,
                     "\nNode: {0}\nParameter name: {1}\nParameter Value: {2}",
-                    new Object[]{this.name, parameterInstance.getName(), parameterInstance.getParameterValue().toString(),});
+                    new Object[]{
+                        this.name,
+                        parameterInstance.getName(),
+                        parameterInstance.getParameterValue().toString()
+                    });
         }
     }
 

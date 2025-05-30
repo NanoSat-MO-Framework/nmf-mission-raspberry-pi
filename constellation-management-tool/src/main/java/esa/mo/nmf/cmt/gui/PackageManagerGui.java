@@ -193,11 +193,13 @@ public class PackageManagerGui extends JFrame {
      * selected NanoSats.
      */
     public void refreshPackageList() {
-        LOGGER.log(Level.INFO, "Refreshing Packages List... ");
+        LOGGER.log(Level.INFO, "Refreshing Packages List for constellation size: {0}",
+                this.selectedNanoSatSegments.size());
         this.tableModel.setRowCount(0);
         HashMap<String, int[]> packageMap = new HashMap<>();
 
         this.selectedNanoSatSegments.forEach(nanoSat -> {
+            LOGGER.log(Level.INFO, "Fetching information for: {0}", nanoSat.getName());
             FindPackageResponse packages = nanoSat.getAllPackages();
             IdentifierList names = packages.getNames();
             BooleanList installed = packages.getInstalled();

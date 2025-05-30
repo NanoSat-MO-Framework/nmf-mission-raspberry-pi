@@ -185,13 +185,11 @@ public class ConstellationManagementTool {
      */
     public void connectToNanoSatSegments(HashMap<String, String> nanoSatSegmentConnections) {
         try {
-
             for (Map.Entry<String, String> segment : nanoSatSegmentConnections.entrySet()) {
                 String name = segment.getKey();
                 String ipAddress = segment.getValue();
 
-                NanoSat nanoSat = new NanoSat(name);
-                nanoSat.setIPAddress(ipAddress);
+                NanoSat nanoSat = new NanoSat(name, ipAddress);
                 nanoSat.connectToProviders();
                 this.constellation.add(nanoSat);
             }
@@ -218,7 +216,7 @@ public class ConstellationManagementTool {
      * segments.
      */
     public void connectToConstellationProviders() {
-        this.constellation.forEach(NanoSat::connectToProviders);
+        // this.constellation.forEach(NanoSat::connectToProviders);
     }
 
     /**
