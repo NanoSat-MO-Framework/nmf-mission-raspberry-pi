@@ -120,14 +120,6 @@ public class NanoSatSimulator extends NanoSat {
     }
 
     /**
-     * @param ipAddress
-     */
-    @Override
-    public void setIPAddress(String ipAddress) {
-        // do nothing - don't change container IP Address
-    }
-
-    /**
      * Deletes the Docker container and sets the NanoSat segment inactive.
      */
     @Override
