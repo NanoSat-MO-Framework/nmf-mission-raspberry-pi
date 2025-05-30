@@ -30,24 +30,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ccsds.moims.mo.mal.MALException;
 import org.ccsds.moims.mo.mal.MALInteractionException;
+import org.ccsds.moims.mo.mal.MOErrorException;
 import org.ccsds.moims.mo.mal.structures.BooleanList;
 import org.ccsds.moims.mo.mal.structures.Identifier;
 import org.ccsds.moims.mo.mal.structures.IdentifierList;
+import org.ccsds.moims.mo.mal.transport.MALMessageHeader;
 import org.ccsds.moims.mo.softwaremanagement.packagemanagement.body.FindPackageResponse;
 import org.ccsds.moims.mo.softwaremanagement.packagemanagement.consumer.PackageManagementAdapter;
 
 /**
- * This class implements the functionality of the
- * NMF Package Management Service for the Constellation Manager.
+ * This class implements the functionality of the NMF Package Management Service
+ * for the Constellation Manager.
  */
 public class PackageManagerGround {
+
+    private static final Logger LOGGER = Logger.getLogger(PackageManagerGround.class.getName());
     private static PackageManagementConsumerServiceImpl serviceSMPackageManagement;
 
     /**
      * Get all NMF packages that are avaibalbe on the NanoSat Segment
      *
      * @param groundMOAdapter ground MO adapter implementation
-     * @return FindPackageResponse: provides the package name and its installation status
+     * @return FindPackageResponse: provides the package name and its
+     * installation status
      */
     public static FindPackageResponse getAllPackages(GroundMOAdapterImpl groundMOAdapter) {
         serviceSMPackageManagement = groundMOAdapter.getSMServices().getPackageManagementService();
@@ -65,7 +70,8 @@ public class PackageManagerGround {
     /**
      * Install the given NMF package on the NanoSat Segment
      *
-     * @param packageName NMF package name
+     * @param groundMOAdapter The Ground MO Adapter.
+     * @param packageName NMF package name.
      */
     public static void installPackage(GroundMOAdapterImpl groundMOAdapter, String packageName) {
         serviceSMPackageManagement = groundMOAdapter.getSMServices().getPackageManagementService();
@@ -76,33 +82,35 @@ public class PackageManagerGround {
             serviceSMPackageManagement.getPackageManagementStub().install(ids, new PackageManagementAdapter() {
 
                 @Override
-                public void installAckReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, org.ccsds.moims.mo.mal.structures.BooleanList integrity, java.util.Map qosProperties) {
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.INFO, "Installing...");
+                public void installAckReceived(MALMessageHeader msgHeader,
+                        BooleanList integrity, java.util.Map qosProperties) {
+                    LOGGER.log(Level.INFO, "Installing...");
                 }
 
                 @Override
-                public void installResponseReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, java.util.Map qosProperties) {
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.INFO, "Installed successfully!");
+                public void installResponseReceived(MALMessageHeader msgHeader, java.util.Map qosProperties) {
+                    LOGGER.log(Level.INFO, "Installed successfully!");
                 }
 
                 @Override
-                public void installAckErrorReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, org.ccsds.moims.mo.mal.MOErrorException error, java.util.Map qosProperties) {
+                public void installAckErrorReceived(MALMessageHeader msgHeader,
+                        MOErrorException error, java.util.Map qosProperties) {
                     String msg = "There was an error during the install operation.";
                     JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.PLAIN_MESSAGE);
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, msg, error);
+                    LOGGER.log(Level.SEVERE, msg, error);
                 }
 
                 @Override
-                public void installResponseErrorReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, org.ccsds.moims.mo.mal.MOErrorException error, java.util.Map qosProperties) {
+                public void installResponseErrorReceived(MALMessageHeader msgHeader,
+                        MOErrorException error, java.util.Map qosProperties) {
                     String msg = "There was an error during the install operation.";
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, msg, error);
+                    LOGGER.log(Level.SEVERE, msg, error);
                 }
             });
         } catch (MALInteractionException | MALException ex) {
-            Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
     }
-
 
     /**
      * Upgrade the given NMF package on the NanoSat Segment
@@ -117,29 +125,37 @@ public class PackageManagerGround {
         try {
             serviceSMPackageManagement.getPackageManagementStub().upgrade(ids, new PackageManagementAdapter() {
                 @Override
-                public void upgradeAckReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, java.util.Map qosProperties) {
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.INFO, "Upgrading...");
+                public void upgradeAckReceived(MALMessageHeader msgHeader, java.util.Map qosProperties) {
+                    LOGGER.log(Level.INFO, "Upgrading...");
                 }
 
                 @Override
-                public void upgradeResponseReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, java.util.Map qosProperties) {
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.INFO, "Upgraded!");
+                public void upgradeResponseReceived(MALMessageHeader msgHeader, java.util.Map qosProperties) {
+                    LOGGER.log(Level.INFO, "Upgraded!");
                 }
 
                 @Override
-                public void upgradeAckErrorReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, org.ccsds.moims.mo.mal.MOErrorException error, java.util.Map qosProperties) {
-                    JOptionPane.showMessageDialog(null, "There was an error during the upgrade operation.", "Error", JOptionPane.PLAIN_MESSAGE);
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, "There was an error during the upgrade operation." + "\nException:\n" + error + "\n" + error.toString(), error);
+                public void upgradeAckErrorReceived(MALMessageHeader msgHeader,
+                        MOErrorException error, java.util.Map qosProperties) {
+                    JOptionPane.showMessageDialog(null,
+                            "There was an error during the upgrade operation.",
+                            "Error", JOptionPane.PLAIN_MESSAGE);
+                    LOGGER.log(Level.SEVERE, "There was an error during the upgrade operation."
+                            + "\nException:\n" + error + "\n" + error.toString(), error);
                 }
 
                 @Override
-                public void upgradeResponseErrorReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, org.ccsds.moims.mo.mal.MOErrorException error, java.util.Map qosProperties) {
-                    JOptionPane.showMessageDialog(null, "There was an error during the upgrade operation.", "Error", JOptionPane.PLAIN_MESSAGE);
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, "There was an error during the upgrade operation." + "\nException:\n" + error + "\n" + error.toString(), error);
+                public void upgradeResponseErrorReceived(MALMessageHeader msgHeader,
+                        MOErrorException error, java.util.Map qosProperties) {
+                    JOptionPane.showMessageDialog(null,
+                            "There was an error during the upgrade operation.",
+                            "Error", JOptionPane.PLAIN_MESSAGE);
+                    LOGGER.log(Level.SEVERE, "There was an error during the upgrade operation."
+                            + "\nException:\n" + error + "\n" + error.toString(), error);
                 }
             });
         } catch (MALInteractionException | MALException ex) {
-            Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
     }
 
@@ -160,31 +176,33 @@ public class PackageManagerGround {
         try {
             serviceSMPackageManagement.getPackageManagementStub().uninstall(ids, keep, new PackageManagementAdapter() {
                 @Override
-                public void uninstallAckReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, java.util.Map qosProperties) {
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.INFO, "Uninstalling...");
+                public void uninstallAckReceived(MALMessageHeader msgHeader, java.util.Map qosProperties) {
+                    LOGGER.log(Level.INFO, "Uninstalling...");
                 }
 
                 @Override
-                public void uninstallResponseReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, java.util.Map qosProperties) {
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.INFO, "Uninstalled successfully!");
+                public void uninstallResponseReceived(MALMessageHeader msgHeader, java.util.Map qosProperties) {
+                    LOGGER.log(Level.INFO, "Uninstalled successfully!");
                 }
 
                 @Override
-                public void uninstallAckErrorReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, org.ccsds.moims.mo.mal.MOErrorException error, java.util.Map qosProperties) {
+                public void uninstallAckErrorReceived(MALMessageHeader msgHeader,
+                        MOErrorException error, java.util.Map qosProperties) {
                     String msg = "There was an error during the uninstall operation.";
                     JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.PLAIN_MESSAGE);
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, msg, error);
+                    LOGGER.log(Level.SEVERE, msg, error);
                 }
 
                 @Override
-                public void uninstallResponseErrorReceived(org.ccsds.moims.mo.mal.transport.MALMessageHeader msgHeader, org.ccsds.moims.mo.mal.MOErrorException error, java.util.Map qosProperties) {
+                public void uninstallResponseErrorReceived(MALMessageHeader msgHeader,
+                        MOErrorException error, java.util.Map qosProperties) {
                     String msg = "There was an error during the uninstall operation.";
                     JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.PLAIN_MESSAGE);
-                    Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, msg, error);
+                    LOGGER.log(Level.SEVERE, msg, error);
                 }
             });
         } catch (MALInteractionException | MALException ex) {
-            Logger.getLogger(ConstellationManagementTool.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
     }
 }

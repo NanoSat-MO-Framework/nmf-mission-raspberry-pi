@@ -27,10 +27,6 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import esa.mo.nmf.cmt.ConstellationManagementTool;
 import esa.mo.nmf.cmt.utils.NanoSat;
-import org.ccsds.moims.mo.mal.structures.BooleanList;
-import org.ccsds.moims.mo.mal.structures.IdentifierList;
-import org.ccsds.moims.mo.softwaremanagement.packagemanagement.body.FindPackageResponse;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +38,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.ccsds.moims.mo.mal.structures.BooleanList;
+import org.ccsds.moims.mo.mal.structures.IdentifierList;
+import org.ccsds.moims.mo.softwaremanagement.packagemanagement.body.FindPackageResponse;
 
 public class PackageManagerGui extends JFrame {
 
@@ -57,8 +56,8 @@ public class PackageManagerGui extends JFrame {
     private JTable tblPackages;
 
     /**
-     * Initializer Constructor.
-     * This Class manages the Packages that are available on the selected NanoSats.
+     * Initializer Constructor. This Class manages the Packages that are
+     * available on the selected NanoSats.
      */
     public PackageManagerGui(ConstellationManagementTool ncm, ArrayList<NanoSat> selectedNanoSatSegments) {
         ncm.connectToConstellationProviders();
@@ -85,9 +84,11 @@ public class PackageManagerGui extends JFrame {
 
                     refreshPackageList();
                 } catch (ArrayIndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(null, "Please select a package!", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please select a package!",
+                            "Error", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "An unexpected Error occurred!", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "An unexpected Error occurred!",
+                            "Error", JOptionPane.INFORMATION_MESSAGE);
                     LOGGER.log(Level.SEVERE, "Failed to install package: ", ex);
                 }
             }
@@ -110,9 +111,11 @@ public class PackageManagerGui extends JFrame {
 
                     refreshPackageList();
                 } catch (ArrayIndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(null, "Please select a package!", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please select a package!",
+                            "Error", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "An unexpected Error occurred!", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "An unexpected Error occurred!",
+                            "Error", JOptionPane.INFORMATION_MESSAGE);
                     LOGGER.log(Level.SEVERE, "Failed to uninstall package: ", ex);
                 }
             }
@@ -129,9 +132,11 @@ public class PackageManagerGui extends JFrame {
 
                     refreshPackageList();
                 } catch (ArrayIndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(null, "Please select a package!", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please select a package!",
+                            "Error", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "An unexpected Error occurred!", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "An unexpected Error occurred!",
+                            "Error", JOptionPane.INFORMATION_MESSAGE);
                     LOGGER.log(Level.SEVERE, "Failed to upgrade package: ", ex);
                 }
             }
@@ -139,7 +144,8 @@ public class PackageManagerGui extends JFrame {
     }
 
     /**
-     * Initialize the table that shows the Packages that are available on the selected NanoSats.
+     * Initialize the table that shows the Packages that are available on the
+     * selected NanoSats.
      */
     private void initPackageTable() {
 
@@ -183,37 +189,45 @@ public class PackageManagerGui extends JFrame {
     }
 
     /**
-     * Refreshes the table that shows the Packages that are available on the selected NanoSats.
+     * Refreshes the table that shows the Packages that are available on the
+     * selected NanoSats.
      */
     public void refreshPackageList() {
-
         LOGGER.log(Level.INFO, "Refreshing Packages List... ");
-
         this.tableModel.setRowCount(0);
-
         HashMap<String, int[]> packageMap = new HashMap<>();
 
         this.selectedNanoSatSegments.forEach(nanoSat -> {
-
             FindPackageResponse packages = nanoSat.getAllPackages();
+            IdentifierList names = packages.getNames();
+            BooleanList installed = packages.getInstalled();
 
-            IdentifierList names = packages.getBodyElement0();
-            BooleanList installed = packages.getBodyElement1();
+            LOGGER.log(Level.INFO, "The satellite retured the packages: {0}", names.toString());
 
             int[] installedOnNodes;
 
             for (int i = 0; i < names.size(); i++) {
-                if (packageMap.get(String.valueOf(names.get(i))) == null) {
-                    installedOnNodes = new int[]{(installed.get(i) ? 1 : 0), 1};
+                String name = String.valueOf(names.get(i));
+                if (packageMap.get(name) == null) {
+                    installedOnNodes = new int[]{
+                        (installed.get(i) ? 1 : 0),
+                        1
+                    };
                 } else {
-                    installedOnNodes = new int[]{(installed.get(i) ? packageMap.get(String.valueOf(names.get(i)))[0] + 1 : packageMap.get(String.valueOf(names.get(i)))[0]), packageMap.get(String.valueOf(names.get(i)))[1] + 1};
+                    installedOnNodes = new int[]{
+                        (installed.get(i) ? packageMap.get(name)[0] + 1 : packageMap.get(name)[0]),
+                        packageMap.get(name)[1] + 1
+                    };
                 }
-                packageMap.put(String.valueOf(names.get(i)), installedOnNodes);
+                packageMap.put(name, installedOnNodes);
             }
         });
 
         for (String name : packageMap.keySet()) {
-            this.tableModel.addRow(new Object[]{name, packageMap.get(name)[0] + "/" + packageMap.get(name)[1]});
+            this.tableModel.addRow(new Object[]{
+                name,
+                packageMap.get(name)[0] + "/" + packageMap.get(name)[1]
+            });
         }
     }
 
@@ -225,9 +239,8 @@ public class PackageManagerGui extends JFrame {
     }
 
     /**
-     * Method generated by IntelliJ IDEA GUI Designer
-     * >>> IMPORTANT!! <<<
-     * DO NOT edit this method OR call it in your code!
+     * Method generated by IntelliJ IDEA GUI Designer >>> IMPORTANT!! <<< DO NOT
+     * edit this method OR call it in your code!
      *
      * @noinspection ALL
      */
