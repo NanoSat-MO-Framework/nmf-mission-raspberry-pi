@@ -79,6 +79,7 @@ public class PackageManagerGui extends JFrame {
                     int row = tblPackages.getSelectedRow();
                     String packageName = tblPackages.getModel().getValueAt(row, 0).toString();
                     selectedNanoSatSegments.forEach(nanoSat -> {
+                        LOGGER.log(Level.SEVERE, "Installing package for nanosat: {0}", nanoSat.getName());
                         nanoSat.installPackage(packageName);
                     });
 

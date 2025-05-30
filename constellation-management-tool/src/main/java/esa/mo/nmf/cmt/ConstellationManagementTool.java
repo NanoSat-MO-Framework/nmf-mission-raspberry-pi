@@ -62,7 +62,6 @@ public class ConstellationManagementTool {
      * Main command line entry point.
      *
      * @param args the command line arguments
-     * @throws Exception If there is an error
      */
     public static void main(final String[] args) {
         ConstellationManagementTool cmt = new ConstellationManagementTool();

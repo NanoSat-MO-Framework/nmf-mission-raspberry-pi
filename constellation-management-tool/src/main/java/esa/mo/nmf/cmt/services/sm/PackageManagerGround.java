@@ -81,12 +81,15 @@ public class PackageManagerGround {
         ids.add(new Identifier(packageName));
 
         try {
+            LOGGER.log(Level.INFO, "Calling install on: {0}",
+                    serviceSMPackageManagement.getConnectionDetails().getProviderURI().getValue());
+
             serviceSMPackageManagement.getPackageManagementStub().asyncInstall(ids, new PackageManagementAdapter() {
 
                 @Override
                 public void installAckReceived(MALMessageHeader msgHeader,
                         BooleanList integrity, java.util.Map qosProperties) {
-                    LOGGER.log(Level.INFO, "Installing  on satellite: {0}", msgHeader.getFrom());
+                    LOGGER.log(Level.INFO, "Installing on satellite: {0}", msgHeader.getFrom());
                 }
 
                 @Override
