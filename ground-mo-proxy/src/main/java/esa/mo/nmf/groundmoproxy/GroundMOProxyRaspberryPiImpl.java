@@ -74,7 +74,7 @@ import org.ccsds.moims.mo.mc.action.ActionHelper;
 public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
 
     private final ProtocolBridgeSPP protocolBridgeSPP = new ProtocolBridgeSPP();
-    private final HashMap<IdentifierList, URI> actionURIs = new HashMap<IdentifierList, URI>();
+    private final HashMap<IdentifierList, URI> actionURIs = new HashMap<>();
 
     /**
      * Ground MO Proxy for OPS-SAT
@@ -107,11 +107,11 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
             super.init(centralDirectoryServiceURI, routedURI);
 
             final URI uri = super.getDirectoryServiceURI();
-            Logger.getLogger(GroundMOProxyRaspberryPiImpl.class.getName()).log(Level.INFO,
-                    "Ground MO Proxy initialized! URI: " + uri + "\n");
+            Logger.getLogger(GroundMOProxyRaspberryPiImpl.class.getName()).log(
+                    Level.INFO, "Ground MO Proxy initialized! URI: " + uri + "\n");
         } catch (Exception ex) {
-            Logger.getLogger(GroundMOProxyRaspberryPiImpl.class.getName()).log(Level.SEVERE,
-                    "The SPP Protocol Bridge could not be initialized!", ex);
+            Logger.getLogger(GroundMOProxyRaspberryPiImpl.class.getName()).log(
+                    Level.SEVERE, "The SPP Protocol Bridge could not be initialized!", ex);
         }
     }
 
@@ -160,7 +160,6 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
                     // The Action service does not exist on this provider...
                     // Do nothing!
                 }
-
             }
         } catch (MALInteractionException ex) {
             Logger.getLogger(GroundMOProxyRaspberryPiImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -179,7 +178,7 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
 
         try {
             final ProviderSummaryList archiveSyncsCD = localDirectoryService.lookupProvider(sf, null);
-            ArrayList<ArchiveSyncConsumerServiceImpl> archiveSyncs = new ArrayList<ArchiveSyncConsumerServiceImpl>();
+            ArrayList<ArchiveSyncConsumerServiceImpl> archiveSyncs = new ArrayList<>();
 
             // Cycle through the NMF Apps and sync them!
             for (int i = 0; i < archiveSyncsCD.size(); i++) {
@@ -208,7 +207,8 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
         }
     }
 
-    public final void syncRemoteArchiveWithLocalArchive(ArrayList<ArchiveSyncConsumerServiceImpl> archiveSyncs) throws MALInteractionException, MALException {
+    public final void syncRemoteArchiveWithLocalArchive(ArrayList<ArchiveSyncConsumerServiceImpl> archiveSyncs)
+            throws MALInteractionException, MALException {
         // Select Parameter Definitions by default
         ObjectTypeList objTypes = new ObjectTypeList();
         UShort shorty = new UShort((short) 0);
@@ -218,18 +218,18 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
             ArchiveSyncConsumerServiceImpl archiveSync = archiveSyncs.get(i);
 
             GetTimeResponse response = archiveSync.getArchiveSyncStub().getTime();
-            FineTime lastSyncTime = response.getBodyElement1();
+            FineTime lastSyncTime = response.getLastSyncTime();
 
             if (lastSyncTime.getValue() == 0) {
                 lastSyncTime = latestTimestampForProvider(archiveSync);
             }
 
-            FineTime until = response.getBodyElement0();
+            FineTime until = response.getCurrentTime();
 
             Logger.getLogger(GroundMOProxyRaspberryPiImpl.class.getName()).log(
                     Level.INFO,
                     "Synchronizing provider: {0}, From: {1}, Until: {2}",
-                    new Object[] {archiveSync.getConnectionDetails().getDomain(), lastSyncTime, until});
+                    new Object[]{archiveSync.getConnectionDetails().getDomain(), lastSyncTime, until});
             // This value should be obtained from the getCurrent timestamp!
             ArrayList<COMObjectStructure> comObjects = archiveSync.retrieveCOMObjects(lastSyncTime, until, objTypes);
 
@@ -266,7 +266,7 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
             Logger.getLogger(GroundMOProxyRaspberryPiImpl.class.getName()).log(
                     Level.INFO,
                     "Synchronizing provider {0} completed",
-                    new Object[] {archiveSync.getConnectionDetails().getDomain()});
+                    new Object[]{archiveSync.getConnectionDetails().getDomain()});
         }
     }
 
@@ -293,7 +293,7 @@ public class GroundMOProxyRaspberryPiImpl extends GroundMOProxy {
                 archiveSync.getConnectionDetails().getDomain(),
                 null,
                 null,
-                new Long(0),
+                0L,
                 null,
                 null,
                 timeInFarFuture,

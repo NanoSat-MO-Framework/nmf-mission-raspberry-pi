@@ -48,7 +48,7 @@
     <dependencies>
         <dependency>
             <groupId>int.esa.nmf.core.moservices.impl</groupId>
-            <artifactId>nmf-platform-generic</artifactId>
+            <artifactId>nmf-services-platform-generic</artifactId>
             <version>4.0-SNAPSHOT</version>
         </dependency>
         <dependency>

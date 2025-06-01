@@ -69,7 +69,7 @@ public class AppManagerGround {
             IdentifierList domain = serviceSMAppsLauncher.getConnectionDetails().getDomain();
 
             return HelperArchive.getArchiveCOMObjectList(archiveService.getArchiveStub(),
-                    AppsLauncherHelper.APPSLAUNCHER_SERVICE.APP_OBJECT_TYPE, domain, appResponse.getBodyElement0());
+                    AppsLauncherHelper.APPSLAUNCHER_SERVICE.APP_OBJECT_TYPE, domain, appResponse.getAppInstIds());
         } catch (MALInteractionException | MALException ex) {
             LOGGER.log(Level.SEVERE, "Failed to list Apps from NanoSat: ", ex);
         }
